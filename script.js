@@ -55,19 +55,54 @@ data.forEach(item => {
   .catch(err => alert("データ取得エラー: " + err));
 
 function showDetail(item) {
-  detailContent.innerHTML = `
-    <h2>${item.title} (${item.titleKana})</h2>
-    <p>英語タイトル：${item.titleEn}</p>
-    <p>楽譜番号：${item.scoreNo}</p>
-    <p>作曲者：${item.composer}</p>
-    <p>アーティスト：${item.artist}</p>
-    <p>50音：${item.fiftySound}</p>
-    <p>アルファベット：${item.alphabet}</p>
-    <p>ジャンル：${item.genre}</p>
-    <p>編成：${item.arrangement}</p>
-    <p>課題曲年：${item.taskYear}</p>
-    <p>備考：${item.memo}</p>
-  `;
+detailContent.innerHTML = `
+  <h2>${item.title}</h2>
+  <div class="detail-block">
+    <span class="label">楽譜番号</span><br>
+    <span class="value">${item.scoreNo}</span>
+  </div>
+　<div class="detail-block">
+    <span class="label">曲名（ふりがな）</span><br>
+    <span class="value">${item.titleKana}</span>
+  </div>
+  <div class="detail-block">
+    <span class="label">曲名（English）</span><br>
+    <span class="value">${item.titleEn}</span>
+  </div>
+  <div class="detail-block">
+    <span class="label">作曲者</span><br>
+    <span class="value">${item.composer}</span>
+  </div>
+  <div class="detail-block">
+    <span class="label">アーティスト</span><br>
+    <span class="value">${item.artist}</span>
+  </div>
+  <div class="detail-block">
+    <span class="label">50音</span><br>
+    <span class="value">${item.fiftySound}</span>
+  </div>
+  <div class="detail-block">
+    <span class="label">アルファベット</span><br>
+    <span class="value">${item.alphabet}</span>
+  </div>
+  <div class="detail-block">
+    <span class="label">ジャンル</span><br>
+    <span class="value">${item.genre}</span>
+  </div>
+  <div class="detail-block">
+    <span class="label">編成</span><br>
+    <span class="value">${item.arrangement}</span>
+  </div>
+  <div class="detail-block">
+    <span class="label">課題曲年</span><br>
+    <span class="value">${item.taskYear}</span>
+  </div>
+  <div class="detail-block">
+    <span class="label">備考</span><br>
+    <span class="value">${item.memo}</span>
+  </div>
+`;
+
   modal.classList.remove("hidden");
 }
 

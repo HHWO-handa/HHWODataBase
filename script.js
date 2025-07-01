@@ -39,12 +39,18 @@ const closeBtn = document.getElementById("closeBtn");
 fetch('https://script.google.com/macros/s/AKfycbxIPXNwF7WNKFB55pbJetDUIWMDWEwsw-43jXA1659QaICvtMuW14gjuv0yEaL45VY/exec')
   .then(res => res.json())
   .then(data => {
-    data.forEach(item => {
-      const li = document.createElement("li");
-      li.textContent = `${item.fiftySound} ｜ ${item.title} ｜ ${item.genre} ｜ ${item.arrangement}`;
-      li.addEventListener("click", () => showDetail(item));
-      scoreList.appendChild(li);
-    });
+data.forEach(item => {
+  const li = document.createElement("li");
+  li.innerHTML = `
+    <span class="col fifty">${item.fiftySound}</span>
+    <span class="col title">${item.title}</span>
+    <span class="col genre">${item.genre}</span>
+    <span class="col arrangement">${item.arrangement}</span>
+  `;
+  li.addEventListener("click", () => showDetail(item));
+  scoreList.appendChild(li);
+});
+
   })
   .catch(err => alert("データ取得エラー: " + err));
 

@@ -22,14 +22,25 @@
     <div id="result">読み取り結果：<span id="codeText">未検出</span></div>
     <button id="startBtn">カメラ起動</button>
 
-    <h1>楽譜データベース</h1>
-<ul id="scoreList"></ul>
+<div id="mainContent">
+  <h1 id="pageTitle">楽譜データベース</h1>
+  <ul id="scoreList"></ul>
+  <div id="placeholderMessage" class="hidden">表示問題なし</div>
+</div>
 
-<!-- 詳細表示モーダル -->
+<!-- 詳細モーダル -->
 <div id="detailModal" class="modal hidden">
   <div class="modal-content" id="detailContent"></div>
-  <button id="closeBtn">閉じる</button>
+  <button id="closeBtn" class="close-btn">閉じる</button>
 </div>
+
+<!-- 画面下部ナビゲーション -->
+<div id="bottomNav">
+  <button id="btnScore">楽譜データベース</button>
+  <button id="btnInstrument">楽器一覧</button>
+  <button id="btnRepair">修理記録</button>
+</div>
+
 
 
     <script src="script.js"></script>

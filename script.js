@@ -35,6 +35,12 @@ const scoreList = document.getElementById("scoreList");
 const modal = document.getElementById("detailModal");
 const detailContent = document.getElementById("detailContent");
 const closeBtn = document.getElementById("closeBtn");
+const placeholder = document.getElementById("placeholderMessage");
+
+const btnScore = document.getElementById("btnScore");
+const btnInstrument = document.getElementById("btnInstrument");
+const btnRepair = document.getElementById("btnRepair");
+const pageTitle = document.getElementById("pageTitle");
 
 fetch('https://script.google.com/macros/s/AKfycbxIPXNwF7WNKFB55pbJetDUIWMDWEwsw-43jXA1659QaICvtMuW14gjuv0yEaL45VY/exec')
   .then(res => res.json())
@@ -107,3 +113,23 @@ detailContent.innerHTML = `
 }
 
 closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
+
+btnScore.addEventListener("click", () => {
+  pageTitle.textContent = "楽譜データベース";
+  scoreList.classList.remove("hidden");
+  placeholder.classList.add("hidden");
+});
+
+btnInstrument.addEventListener("click", () => {
+  pageTitle.textContent = "楽器一覧";
+  scoreList.classList.add("hidden");
+  placeholder.textContent = "表示問題なし";
+  placeholder.classList.remove("hidden");
+});
+
+btnRepair.addEventListener("click", () => {
+  pageTitle.textContent = "修理記録";
+  scoreList.classList.add("hidden");
+  placeholder.textContent = "表示問題なし";
+  placeholder.classList.remove("hidden");
+});

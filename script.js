@@ -9,7 +9,7 @@ startBtn.addEventListener("click", () => {
             codeText.innerText = qrCodeMessage;
 
             // スプレッドシートに送信
-            fetch('https://script.google.com/macros/s/AKfycbzfABbmmnkh5kDsnOsu9ubYy5YGddSaQd0sTwqqSLkdyHDsbCkO3hM2G59inM74Sn0/exec', {
+            fetch('https://script.google.com/macros/s/AKfycbxKFyWH7q3l4fwF8RhTyin1XmLyH5hF-6BxPrKZBWxqZZGQdPjNuFmZaScPuG7glbU/exec', {
                 method: 'POST',
                 body: JSON.stringify({ code: qrCodeMessage }),
                 headers: { 'Content-Type': 'application/json' }

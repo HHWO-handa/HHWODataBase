@@ -78,7 +78,9 @@ li {
   background: #fff;
   padding: 20px;
   max-width: 90%;
+  text-align: left;
 }
+
 .hidden {
   display: none;
 }

@@ -84,3 +84,17 @@ li {
 .hidden {
   display: none;
 }
+
+
+.detail-block {
+  margin-bottom: 10px;
+}
+
+.label {
+  font-size: 7px;
+  color: #666;
+}
+
+.value {
+  font-size: 14px;
+}

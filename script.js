@@ -108,11 +108,14 @@ detailContent.innerHTML = `
     <span class="value">${item.memo}</span>
   </div>
 `;
-
   modal.classList.remove("hidden");
+  document.getElementById("bottomNav").classList.add("hidden");
 }
 
-closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
+closeBtn.addEventListener("click", () => {
+  modal.classList.add("hidden");
+  document.getElementById("bottomNav").classList.remove("hidden");
+});
 
 btnScore.addEventListener("click", () => {
   pageTitle.textContent = "楽譜データベース";

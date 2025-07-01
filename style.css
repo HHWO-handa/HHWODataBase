@@ -41,10 +41,30 @@ ul {
   padding: 0;
 }
 li {
-  padding: 15px;
+  display: flex;
   border-bottom: 1px solid #ccc;
+  padding: 10px;
   cursor: pointer;
 }
+.col {
+  padding: 0 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.fifty {
+  width: 15%;
+}
+.title {
+  width: 45%;
+}
+.genre {
+  width: 20%;
+}
+.arrangement {
+  width: 20%;
+}
+
 .modal {
   position: fixed;
   top: 0; left: 0;

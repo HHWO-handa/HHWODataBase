@@ -51,10 +51,11 @@ button:hover {
 .modal-content {
   background: #fff;
   padding: 20px;
-  max-width: 90%;
+  width: 90%;
   text-align: left;
   overflow-y: auto;
   max-height: 70%;
+  box-sizing: border-box;
 }
 
 .close-btn {

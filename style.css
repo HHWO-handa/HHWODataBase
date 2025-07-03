@@ -158,5 +158,34 @@ li {
 
 /* 既存 mainContent の位置を下げる */
 #mainContent {
-  margin-top: 60px;
+  margin-top: 80px;
+}
+
+
+/* 楽器一覧の画像サイズ調整 */
+#instrumentList li {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+  cursor: pointer;
+  justify-content: space-between;
+}
+
+.instrument-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.instrument-info {
+  display: flex;
+  flex-direction: column;
+}
+
+#instrumentList img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
 }

@@ -112,6 +112,7 @@ function renderInstrumentList(data) {
 
 function showInstrumentDetail(item) {
     detailContent.innerHTML = `
+        <img src="${item.image}" alt="画像">
         <h2>${item.instrumentName}</h2>
         ${generateDetailBlock("楽器番号", item.instrumentNo)}
         ${generateDetailBlock("QRコード", item.qr)}

@@ -100,10 +100,10 @@ function renderInstrumentList(data) {
                 <img src="${item.image}" alt="画像">
                 <div class="instrument-info">
                     <span>${item.instrumentName}</span>
-                    <span>${item.instrumentNo}</span>
+                    <span>${item.equipmentNo}</span>
                 </div>
             </div>
-            <span> ${item.equipmentNo}</span>
+            <span> ${item.instrumentNo}</span>
         `;
         li.addEventListener("click", () => showInstrumentDetail(item));
         instrumentList.appendChild(li);
@@ -112,7 +112,9 @@ function renderInstrumentList(data) {
 
 function showInstrumentDetail(item) {
     detailContent.innerHTML = `
+        <div class="instrument-detail">
         <img src="${item.image}" alt="画像">
+        </div>
         <h2>${item.instrumentName}</h2>
         ${generateDetailBlock("楽器番号", item.instrumentNo)}
         ${generateDetailBlock("QRコード", item.qr)}

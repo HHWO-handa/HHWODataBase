@@ -100,10 +100,10 @@ function renderInstrumentList(data) {
                 <img src="${item.image}" alt="画像">
                 <div class="instrument-info">
                     <span>${item.instrumentName}</span>
-                    <span>${item.instrumentNo} ${item.equipmentNo}</span>
+                    <span>${item.instrumentNo}</span>
                 </div>
             </div>
-            <span>${item.instrumentNo}</span>
+            <span> ${item.equipmentNo}</span>
         `;
         li.addEventListener("click", () => showInstrumentDetail(item));
         instrumentList.appendChild(li);

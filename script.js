@@ -138,31 +138,41 @@ closeBtn.addEventListener("click", () => {
     topBar.classList.remove("hidden");
 });
 
+
 btnScore.addEventListener("click", () => {
-    pageTitle.textContent = "楽譜データベース";
-    scoreList.classList.remove("hidden");
-    instrumentList.classList.add("hidden");
-    placeholder.classList.add("hidden");
-    renderList(allData);
+  pageTitle.textContent = "楽譜データベース";
+  scoreList.classList.remove("hidden");
+  instrumentList.classList.add("hidden");
+  placeholder.classList.add("hidden");
+
+  document.getElementById("searchScoreArea").classList.remove("hidden");
+  document.getElementById("searchInstrumentArea").classList.add("hidden");
 });
 
 btnInstrument.addEventListener("click", () => {
-    pageTitle.textContent = "楽器一覧";
-    scoreList.classList.add("hidden");
-    instrumentList.classList.remove("hidden");
-    placeholder.classList.add("hidden");
-    renderInstrumentList(allInstrumentData);
+  pageTitle.textContent = "楽器一覧";
+  scoreList.classList.add("hidden");
+  instrumentList.classList.remove("hidden");
+  placeholder.classList.add("hidden");
+
+  document.getElementById("searchScoreArea").classList.add("hidden");
+  document.getElementById("searchInstrumentArea").classList.remove("hidden");
+
+  renderInstrumentList(allInstrumentData);
 });
 
 btnRepair.addEventListener("click", () => {
-    pageTitle.textContent = "修理記録";
-    scoreList.classList.add("hidden");
-    instrumentList.classList.add("hidden");
-    placeholder.textContent = "表示問題なし";
-    placeholder.classList.remove("hidden");
+  pageTitle.textContent = "修理記録";
+  scoreList.classList.add("hidden");
+  instrumentList.classList.add("hidden");
+  placeholder.textContent = "表示問題なし";
+  placeholder.classList.remove("hidden");
+
+  document.getElementById("searchScoreArea").classList.add("hidden");
+  document.getElementById("searchInstrumentArea").classList.add("hidden");
 });
 
-// 検索・フィルター
+// 楽譜データベース検索・フィルター
 searchInput.addEventListener("input", e => {
     const keyword = e.target.value.toLowerCase();
     const filtered = allData.filter(item =>
@@ -187,3 +197,38 @@ function generateDetailBlock(label, value) {
         </div>
     `;
 }
+
+//楽器一覧検索機能
+document.getElementById("searchInstrumentInput").addEventListener("input", e => {
+  const keyword = e.target.value.toLowerCase();
+  const filtered = allInstrumentData.filter(item =>
+    Object.values(item).some(val =>
+      String(val).toLowerCase().includes(keyword)
+    )
+  );
+  renderInstrumentList(filtered);
+});
+
+
+//QRコード読み込み機能
+const qr = new Html5Qrcode("reader");
+
+document.getElementById("qrInstrumentBtn").addEventListener("click", () => {
+  qr.start({ facingMode: "environment" }, { fps: 10, qrbox: 250 },
+    qrCodeMessage => {
+      document.getElementById("searchInstrumentInput").value = qrCodeMessage;
+
+      const filtered = allInstrumentData.filter(item =>
+        Object.values(item).some(val =>
+          String(val).toLowerCase().includes(qrCodeMessage.toLowerCase())
+        )
+      );
+      renderInstrumentList(filtered);
+      qr.stop();
+    },
+    errorMessage => {
+      // 読み取り失敗時は無視
+    }
+  );
+});
+

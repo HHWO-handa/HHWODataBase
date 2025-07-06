@@ -28,8 +28,8 @@ fetch("https://script.google.com/macros/s/AKfycbzGdT1xAFE4IuxK5gTC3Eh2iLE2r9Wr5t
     .catch(err => alert("データ取得エラー: " + err));
 
 function renderList(data) {
-    scoreList.innerHTML = "";
-    placeholder.classList.add("hidden");
+  const list = document.getElementById("scoreList");
+  list.innerHTML = "";  // リストだけ消去
     data.forEach(item => {
         const li = document.createElement("li");
         li.innerHTML = `
@@ -70,7 +70,8 @@ fetch("https://script.google.com/macros/s/AKfycbzGdT1xAFE4IuxK5gTC3Eh2iLE2r9Wr5t
     .catch(err => alert("楽器データ取得エラー: " + err));
 
 function renderInstrumentList(data) {
-    instrumentList.innerHTML = "";
+      const list = document.getElementById("instrumentList");
+  list.innerHTML = "";  // リストだけ消去
     data.forEach(item => {
         const li = document.createElement("li");
         li.innerHTML = `

@@ -50,16 +50,35 @@
 
     
 <!-- うまく使えない可能性大 -->
-<!-- 楽譜検索バー -->
-<div id="searchScoreArea">
-  <input type="text" id="searchScoreInput" placeholder="楽譜データベースを検索">
-  <button id="filterBtn">絞り込み</button>
+<!-- 検索バー固定用エリア -->
+<div id="fixedHeader">
+  
+  <!-- 楽譜検索バー -->
+  <div id="searchScoreArea">
+    <input type="text" id="searchScoreInput" placeholder="楽譜データベースを検索">
+    <button id="filterBtn">絞り込み</button>
+  </div>
+
+  <!-- 楽器検索バー -->
+  <div id="searchInstrumentArea" class="hidden">
+    <input type="text" id="searchInstrumentInput" placeholder="楽器一覧を検索">
+    <button id="qrInstrumentBtn">📷</button>
+  </div>
+
 </div>
 
-<!-- 楽器検索バー（新規追加） -->
-<div id="searchInstrumentArea" class="hidden">
-  <input type="text" id="searchInstrumentInput" placeholder="楽器一覧を検索">
-  <button id="qrInstrumentBtn">📷</button>
+<!-- コンテンツ本体 -->
+<div id="mainContent">
+  
+  <!-- 楽譜リスト -->
+  <ul id="scoreList"></ul>
+
+  <!-- 楽器リスト -->
+  <ul id="instrumentList" class="hidden"></ul>
+
+  <!-- プレースホルダー（修理記録など） -->
+  <div id="placeholderMessage" class="hidden">表示問題なし</div>
+
 </div>
 
 

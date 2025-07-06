@@ -207,16 +207,20 @@ li {
 }
 
 /* 新規 */
+#fixedHeader {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #f0f0f0;
+  padding: 8px;
+}
+
 #searchScoreArea,
 #searchInstrumentArea {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px;
-  background: #f0f0f0;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  margin-bottom: 8px;
 }
 
 #searchScoreArea input,
@@ -236,3 +240,5 @@ li {
 .hidden {
   display: none;
 }
+
+

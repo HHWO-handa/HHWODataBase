@@ -1,25 +1,3 @@
-// QRコード読み取り機能（現時点で未使用想定）
-const qr = new Html5Qrcode("reader");
-const startBtn = document.getElementById("startBtn");
-const codeText = document.getElementById("codeText");
-
-startBtn.addEventListener("click", () => {
-    qr.start({ facingMode: "environment" }, { fps: 10, qrbox: 250 }, qrCodeMessage => {
-        console.log("読み取ったデータ:", qrCodeMessage);
-        codeText.innerText = qrCodeMessage;
-
-        fetch("https://script.google.com/macros/s/AKfycbzGdT1xAFE4IuxK5gTC3Eh2iLE2r9Wr5tbuNci7fDm63zXnWfahGufyPJS1roj15Aw/exec", {
-            method: "POST",
-            body: JSON.stringify({ code: qrCodeMessage }),
-            headers: { "Content-Type": "application/json" }
-        })
-        .then(res => res.json())
-        .then(data => alert("スプレッドシートに送信しました: " + JSON.stringify(data)))
-        .catch(err => alert("送信エラー: " + err));
-
-        qr.stop();
-    });
-});
 
 // 共通要素取得
 const scoreList = document.getElementById("scoreList");

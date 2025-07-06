@@ -205,3 +205,34 @@ li {
   gap: 10px;
   flex: 1;
 }
+
+/* 新規 */
+#searchScoreArea,
+#searchInstrumentArea {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  background: #f0f0f0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+#searchScoreArea input,
+#searchInstrumentArea input {
+  flex: 1;
+  margin-right: 8px;
+  padding: 4px;
+  font-size: 16px;
+}
+
+#searchScoreArea button,
+#searchInstrumentArea button {
+  padding: 6px 10px;
+  font-size: 16px;
+}
+
+.hidden {
+  display: none;
+}

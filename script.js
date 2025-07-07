@@ -212,9 +212,7 @@ const qr = new Html5Qrcode("reader");
 document.getElementById("qrInstrumentBtn").addEventListener("click", () => {
   // 強制的に楽器一覧を表示
   btnInstrument.click();
-
-  const readerDiv = document.getElementById("reader");
-  readerDiv.style.display = "block";
+  document.getElementById("reader").style.display = "block";  
 
   qr.start({ facingMode: "environment" }, { fps: 10, qrbox: 250 },
     qrCodeMessage => {
@@ -228,7 +226,7 @@ document.getElementById("qrInstrumentBtn").addEventListener("click", () => {
       renderInstrumentList(filtered);
 
       qr.stop();
-      readerDiv.style.display = "none";
+  document.getElementById("reader").style.display = "none";
     },
     errorMessage => {
       // 読み取り失敗時は無視

@@ -215,7 +215,7 @@ const qr = new Html5Qrcode("reader");
 document.getElementById("qrInstrumentBtn").addEventListener("click", () => {
   qr.start({ facingMode: "environment" }, { fps: 10, qrbox: 250 },
     qrCodeMessage => {
-      document.getElementById("searchInstrumentInput").value = qrCodeMessage;
+      document.getElementById("searchInput").value = qrCodeMessage;
 
       const filtered = allInstrumentData.filter(item =>
         Object.values(item).some(val =>

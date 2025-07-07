@@ -124,7 +124,6 @@ btnScore.addEventListener("click", () => {
   instrumentList.classList.add("hidden");
   placeholder.classList.add("hidden");
 
-  document.getElementById("searchScoreArea").classList.remove("hidden");
   document.getElementById("searchInstrumentArea").classList.add("hidden");
 });
 
@@ -134,7 +133,6 @@ btnInstrument.addEventListener("click", () => {
   instrumentList.classList.remove("hidden");
   placeholder.classList.add("hidden");
 
-  document.getElementById("searchScoreArea").classList.add("hidden");
   document.getElementById("searchInstrumentArea").classList.remove("hidden");
 
   renderInstrumentList(allInstrumentData);
@@ -147,7 +145,6 @@ btnRepair.addEventListener("click", () => {
   placeholder.textContent = "表示問題なし";
   placeholder.classList.remove("hidden");
 
-  document.getElementById("searchScoreArea").classList.add("hidden");
   document.getElementById("searchInstrumentArea").classList.add("hidden");
 });
 

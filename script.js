@@ -152,20 +152,51 @@ btnRepair.addEventListener("click", () => {
 });
 
 // 楽譜データベース検索・フィルター
-searchInput.addEventListener("input", e => {
-    const keyword = e.target.value.toLowerCase();
+document.getElementById("searchInput").addEventListener("input", (e) => {
+  const keyword = e.target.value.toLowerCase();
+
+  if (currentPage === "score") {
     const filtered = allData.filter(item =>
-        Object.values(item).some(val => String(val).toLowerCase().includes(keyword))
+      Object.values(item).some(val =>
+        String(val).toLowerCase().includes(keyword)
+      )
     );
     renderList(filtered);
+  }
+
+  if (currentPage === "instrument") {
+    const filtered = allInstrumentData.filter(item =>
+      Object.values(item).some(val =>
+        String(val).toLowerCase().includes(keyword)
+      )
+    );
+    renderInstrumentList(filtered);
+  }
 });
 
-filterBtn.addEventListener("click", () => {
-    const genreFilter = prompt("ジャンル名を入力してください：");
-    if (!genreFilter) return;
-    const filtered = allData.filter(item => item.genre.includes(genreFilter));
-    renderList(filtered);
+
+let currentPage = "score";
+
+btnScore.addEventListener("click", () => {
+  currentPage = "score";
+  pageTitle.textContent = "楽譜データベース";
+  scoreList.classList.remove("hidden");
+  instrumentList.classList.add("hidden");
+  placeholder.classList.add("hidden");
+  document.getElementById("searchInput").value = "";
 });
+
+btnInstrument.addEventListener("click", () => {
+  currentPage = "instrument";
+  pageTitle.textContent = "楽器一覧";
+  scoreList.classList.add("hidden");
+  instrumentList.classList.remove("hidden");
+  placeholder.classList.add("hidden");
+  document.getElementById("searchInput").value = "";
+  renderInstrumentList(allInstrumentData);
+});
+
+
 
 // 詳細表示共通ブロック生成
 function generateDetailBlock(label, value) {
@@ -176,17 +207,6 @@ function generateDetailBlock(label, value) {
         </div>
     `;
 }
-
-//楽器一覧検索機能
-document.getElementById("searchInstrumentInput").addEventListener("input", e => {
-  const keyword = e.target.value.toLowerCase();
-  const filtered = allInstrumentData.filter(item =>
-    Object.values(item).some(val =>
-      String(val).toLowerCase().includes(keyword)
-    )
-  );
-  renderInstrumentList(filtered);
-});
 
 
 //QRコード読み込み機能

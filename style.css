@@ -133,28 +133,35 @@ li {
 
 
 
-/* 新規追加：上部検索・フィルター */
+/* 上部検索・フィルター */
 #topBar {
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
-  width: 100%;
-  background: #eee;
+  background: #f0f0f0;
+  padding: 8px;
   display: flex;
-  padding: 10px;
-  gap: 10px;
-  z-index: 100;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
 }
 
-#searchInput {
+#searchArea {
+  display: flex;
   flex: 1;
-  padding: 5px;
+  gap: 8px;
 }
 
-#filterBtn {
-  padding: 5px 10px;
+#searchArea input {
+  flex: 1;
+  padding: 6px;
+  font-size: 16px;
 }
+
+#searchArea button {
+  padding: 6px 10px;
+  font-size: 16px;
+}
+
 
 /* 既存 mainContent の位置を下げる */
 #mainContent {
@@ -206,39 +213,7 @@ li {
   flex: 1;
 }
 
-/* 新規 */
-#fixedHeader {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: #f0f0f0;
-  padding: 8px;
-}
 
-#searchScoreArea,
-#searchInstrumentArea {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
 
-#searchScoreArea input,
-#searchInstrumentArea input {
-  flex: 1;
-  margin-right: 8px;
-  padding: 4px;
-  font-size: 16px;
-}
-
-#searchScoreArea button,
-#searchInstrumentArea button {
-  padding: 6px 10px;
-  font-size: 16px;
-}
-
-.hidden {
-  display: none;
-}
 
 

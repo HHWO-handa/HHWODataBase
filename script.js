@@ -235,3 +235,14 @@ document.getElementById("qrInstrumentBtn").addEventListener("click", () => {
     }
   );
 });
+
+
+const closeCameraBtn = document.getElementById("closeCameraBtn");
+
+closeCameraBtn.addEventListener("click", () => {
+  qr.stop().then(() => {
+    document.getElementById("reader").style.display = "none";
+  }).catch(err => {
+    alert("カメラ停止時にエラーが発生しました: " + err);
+  });
+});

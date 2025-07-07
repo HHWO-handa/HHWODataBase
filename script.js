@@ -77,9 +77,11 @@ function renderInstrumentList(data) {
         li.innerHTML = `
             <div class="instrument-left">
                 <img src="${item.image}" alt="画像">
-                <div class="instrument-info">
+                <div class="instrument-infoA">
                     <span>${item.instrumentName}</span>
-                    <span>${item.equipmentNo}</span>
+                    <div class="instrument-infoB">
+                       <span>${item.equipmentNo}</span>
+                    </div>
                 </div>
             </div>
             <span> ${item.instrumentNo}</span>

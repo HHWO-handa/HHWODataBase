@@ -19,7 +19,7 @@ let allData = [];
 let allInstrumentData = [];
 
 // 楽譜データ取得
-fetch("https://script.google.com/macros/s/AKfycbyWwMu7k_NjNnKzGwO70-hJiQBJ4rfJ-1b-nvW7bGgQQOuo1erxaHrJBSGOEf4WMuY/exec?sheet=ScoreDataBase")
+fetch("https://script.google.com/macros/s/AKfycbwzWYc65hwcOGz9Z1QTLaW3W6nF96mWZrDdFZessbulQBmuBsjhMvM9Qw0Q2rUGyTU/exec?sheet=ScoreDataBase")
     .then(res => res.json())
     .then(data => {
         allData = data;
@@ -64,7 +64,7 @@ function showDetail(item) {
 }
 
 // 楽器データ取得
-fetch("https://script.google.com/macros/s/AKfycbyWwMu7k_NjNnKzGwO70-hJiQBJ4rfJ-1b-nvW7bGgQQOuo1erxaHrJBSGOEf4WMuY/exec?sheet=InstrumentDataBase")
+fetch("https://script.google.com/macros/s/AKfycbwzWYc65hwcOGz9Z1QTLaW3W6nF96mWZrDdFZessbulQBmuBsjhMvM9Qw0Q2rUGyTU/exec?sheet=InstrumentDataBase")
     .then(res => res.json())
     .then(data => allInstrumentData = data)
     .catch(err => alert("楽器データ取得エラー: " + err));
@@ -296,7 +296,7 @@ addScoreForm.addEventListener("submit", (e) => {
   };
 
   // バリデーション通過済みなので送信
-  fetch("https://script.google.com/macros/s/AKfycbyWwMu7k_NjNnKzGwO70-hJiQBJ4rfJ-1b-nvW7bGgQQOuo1erxaHrJBSGOEf4WMuY/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbwzWYc65hwcOGz9Z1QTLaW3W6nF96mWZrDdFZessbulQBmuBsjhMvM9Qw0Q2rUGyTU/exec", {
     method: "POST",
     body: JSON.stringify({ action: "addScore", data: formData }),
     headers: { "Content-Type": "application/json" }

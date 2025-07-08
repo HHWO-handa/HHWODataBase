@@ -303,20 +303,11 @@ addScoreForm.addEventListener("submit", (e) => {
   })
   .then(res => res.json())
   .then(res => {
-
-  if (data.status === "success") {
-    alert("送信成功");
-  } else {
-    alert("送信失敗: " + data.message);
-  }
-})
-.catch(err => {
-  alert("通信エラー: " + err.message);
-    //alert("追加完了");
-    //addScoreModal.classList.add("hidden");
-    //topBar.classList.remove("hidden");
-    //bottomNav.classList.remove("hidden");
-    //location.reload(); // 再読み込みで反映
- // })
- // .catch(err => alert("送信失敗: " + err));
+    alert("追加完了");
+    addScoreModal.classList.add("hidden");
+    topBar.classList.remove("hidden");
+    bottomNav.classList.remove("hidden");
+    location.reload(); // 再読み込みで反映
+  })
+  .catch(err => alert("送信失敗: " + err));
 });

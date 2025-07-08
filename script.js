@@ -296,18 +296,27 @@ addScoreForm.addEventListener("submit", (e) => {
   };
 
   // バリデーション通過済みなので送信
-  fetch("https://script.google.com/macros/s/AKfycbwjstiHQABLiP-3ohxPgebrEl-eU2SKuNCvSUOyG4wQw3Y-LU9MR3N8u-iX9cjvOkA/exec", {
+  fetch("https://script.google.com/macros/s/AKfycby0TWNJHuU6iAKvC6t5pC0RblNxqSzh4aYW2L9NzgQzOqMtFzDtUE4eVr7AayXrcH0/exec", {
     method: "POST",
     body: JSON.stringify({ action: "addScore", data: formData }),
     headers: { "Content-Type": "application/json" }
   })
   .then(res => res.json())
   .then(res => {
-    alert("追加完了");
-    addScoreModal.classList.add("hidden");
-    topBar.classList.remove("hidden");
-    bottomNav.classList.remove("hidden");
-    location.reload(); // 再読み込みで反映
-  })
-  .catch(err => alert("送信失敗: " + err));
+
+  if (data.status === "success") {
+    alert("送信成功");
+  } else {
+    alert("送信失敗: " + data.message);
+  }
+})
+.catch(err => {
+  alert("通信エラー: " + err.message);
+    //alert("追加完了");
+    //addScoreModal.classList.add("hidden");
+    //topBar.classList.remove("hidden");
+    //bottomNav.classList.remove("hidden");
+    //location.reload(); // 再読み込みで反映
+ // })
+ // .catch(err => alert("送信失敗: " + err));
 });

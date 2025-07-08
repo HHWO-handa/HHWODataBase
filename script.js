@@ -246,3 +246,68 @@ closeCameraBtn.addEventListener("click", () => {
     alert("カメラ停止時にエラーが発生しました: " + err);
   });
 });
+
+//以下、楽譜追加機能
+//以下、楽譜追加機能
+
+const addScoreBtn = document.getElementById("addScoreBtn");
+const addScoreModal = document.getElementById("addScoreModal");
+const cancelAddBtn = document.getElementById("cancelAddBtn");
+const addScoreForm = document.getElementById("addScoreForm");
+
+// モーダル開く
+addScoreBtn.addEventListener("click", () => {
+  // 最大の楽譜番号を取得して+1（文字列→数値）
+  const maxScoreNo = allData.reduce((max, item) => {
+    const num = parseInt(item.scoreNo);
+    return isNaN(num) ? max : Math.max(max, num);
+  }, 0);
+  document.getElementById("scoreNo").value = maxScoreNo + 1;
+
+  addScoreModal.classList.remove("hidden");
+  topBar.classList.add("hidden");
+  bottomNav.classList.add("hidden");
+});
+
+// モーダル閉じる
+cancelAddBtn.addEventListener("click", () => {
+  addScoreModal.classList.add("hidden");
+  topBar.classList.remove("hidden");
+  bottomNav.classList.remove("hidden");
+});
+
+// フォーム送信
+addScoreForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  
+  const formData = {
+    scoreNo: document.getElementById("scoreNo").value,
+    title: document.getElementById("title").value,
+    titleKana: document.getElementById("titleKana").value,
+    titleEn: document.getElementById("titleEn").value,
+    composer: document.getElementById("composer").value,
+    artist: document.getElementById("artist").value,
+    fiftySound: document.getElementById("fiftySound").value,
+    alphabet: document.getElementById("alphabet").value,
+    genre: document.getElementById("genre").value,
+    arrangement: document.getElementById("arrangement").value,
+    taskYear: document.getElementById("taskYear").value,
+    memo: document.getElementById("memo").value
+  };
+
+  // バリデーション通過済みなので送信
+  fetch("https://script.google.com/macros/s/AKfycbyJnpdAAWd-HTRB-8fysLs6qK1e1pqoMrBQFks0f-670ZmOGRMNqSeWbRSG8jkPJVo/exec", {
+    method: "POST",
+    body: JSON.stringify({ action: "addScore", data: formData }),
+    headers: { "Content-Type": "application/json" }
+  })
+  .then(res => res.json())
+  .then(res => {
+    alert("追加完了");
+    addScoreModal.classList.add("hidden");
+    topBar.classList.remove("hidden");
+    bottomNav.classList.remove("hidden");
+    location.reload(); // 再読み込みで反映
+  })
+  .catch(err => alert("送信失敗: " + err));
+});

@@ -296,7 +296,7 @@ addScoreForm.addEventListener("submit", (e) => {
   };
 
   // バリデーション通過済みなので送信
-  fetch("https://script.google.com/macros/s/AKfycbyJnpdAAWd-HTRB-8fysLs6qK1e1pqoMrBQFks0f-670ZmOGRMNqSeWbRSG8jkPJVo/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbwjstiHQABLiP-3ohxPgebrEl-eU2SKuNCvSUOyG4wQw3Y-LU9MR3N8u-iX9cjvOkA/exec", {
     method: "POST",
     body: JSON.stringify({ action: "addScore", data: formData }),
     headers: { "Content-Type": "application/json" }

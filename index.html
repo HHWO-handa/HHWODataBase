@@ -23,6 +23,7 @@
   <div id="searchArea">
     <input type="text" id="searchInput" placeholder="検索">
     <button id="filterBtn">絞り込み</button>
+      <button id="addScoreBtn">＋</button>
 　　 <button id="qrInstrumentBtn">📷</button>
   </div>
 </div>
@@ -54,6 +55,45 @@
   <button id="btnInstrument">楽器一覧</button>
   <button id="btnRepair">修理記録</button>
 </div>
+
+
+<!-- 楽譜追加モーダル -->
+<div id="addScoreModal" class="modal hidden">
+  <div class="modal-content">
+    <h2>楽譜追加</h2>
+    <form id="addScoreForm">
+      <label>楽譜番号（自動）<input type="text" id="scoreNo" readonly></label><br>
+      <label>曲名*<input type="text" id="title" required></label><br>
+      <label>曲名（ふりがな）*<input type="text" id="titleKana" required></label><br>
+      <label>曲名（English）<input type="text" id="titleEn"></label><br>
+      <label>作曲者*<input type="text" id="composer" required></label><br>
+      <label>アーティスト<input type="text" id="artist"></label><br>
+      <label>50音*<input type="text" id="fiftySound" maxlength="1" pattern="[ぁ-ん]" required></label><br>
+      <label>アルファベット<input type="text" id="alphabet" maxlength="1" pattern="[A-Z]"></label><br>
+      <label>ジャンル*:
+        <select id="genre" required>
+          <option value="">選択</option>
+          <option>ポップス</option><option>クラシック</option><option>式典音楽</option>
+          <option>課題曲</option><option>アンサンブル</option><option>マーチ</option><option>その他</option>
+        </select>
+      </label><br>
+      <label>編成*:
+        <select id="arrangement" required>
+          <option value="">選択</option>
+          <option>吹奏楽</option><option>木管</option><option>金管</option><option>打楽器</option>
+          <option>フルート</option><option>クラリネット</option><option>サックス</option>
+          <option>トランペット</option><option>ホルン</option><option>トロンボーン</option>
+          <option>フレックス</option><option>バリ・チューバ</option>
+        </select>
+      </label><br>
+      <label>課題曲年<input type="text" id="taskYear" pattern="\\d{4}"></label><br>
+      <label>備考<textarea id="memo"></textarea></label><br>
+      <button type="submit">追加</button>
+      <button type="button" id="cancelAddBtn">キャンセル</button>
+    </form>
+  </div>
+</div>
+
 
 
     <script src="script.js"></script>

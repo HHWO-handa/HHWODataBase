@@ -19,7 +19,7 @@ let allData = [];
 let allInstrumentData = [];
 
 // 楽譜データ取得
-fetch("https://script.google.com/macros/s/AKfycbyuj66NdUBlEHybBu3WoXwo9IsmByHfnCIFMjoA6KJqRT5h9nBW-0jqWKwjYrEty64/exec?sheet=ScoreDataBase")
+fetch("https://script.google.com/macros/s/AKfycbyCXLTlhtA1KtXALCKnhRDIwzrqQGbkaKZ9wAAbZOLQjCdODlXau8Y5Z3DoN7xrtlI/exec?sheet=ScoreDataBase")
     .then(res => res.json())
     .then(data => {
         allData = data;
@@ -64,7 +64,7 @@ function showDetail(item) {
 }
 
 // 楽器データ取得
-fetch("https://script.google.com/macros/s/AKfycbyuj66NdUBlEHybBu3WoXwo9IsmByHfnCIFMjoA6KJqRT5h9nBW-0jqWKwjYrEty64/exec?sheet=InstrumentDataBase")
+fetch("https://script.google.com/macros/s/AKfycbyCXLTlhtA1KtXALCKnhRDIwzrqQGbkaKZ9wAAbZOLQjCdODlXau8Y5Z3DoN7xrtlI/exec?sheet=InstrumentDataBase")
     .then(res => res.json())
     .then(data => allInstrumentData = data)
     .catch(err => alert("楽器データ取得エラー: " + err));
@@ -298,27 +298,24 @@ addScoreForm.addEventListener("submit", async (e) => {
   }
 
   try {
-    const res = await fetch("https://script.google.com/macros/s/AKfycbyuj66NdUBlEHybBu3WoXwo9IsmByHfnCIFMjoA6KJqRT5h9nBW-0jqWKwjYrEty64/exec", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        action: "addScore",
-        data: scoreData
-      })
-    });
-
-    const result = await res.json();
-    if (result.status === "success") {
-      alert("送信成功！");
-      addScoreModal.classList.add("hidden");
-    } else {
-      alert("送信失敗: " + result.message);
-    }
-
-  } catch (err) {
-    alert("送信エラー: " + err.message);
+    const res = await fetch("https://script.google.com/macros/s/AKfycbyCXLTlhtA1KtXALCKnhRDIwzrqQGbkaKZ9wAAbZOLQjCdODlXau8Y5Z3DoN7xrtlI/exec", {
+  method: "POST",
+  headers: {
+    "Content-Type": "text/plain"
+  },
+  body: JSON.stringify({
+    action: "addScore",
+    data: scoreData
+  })
+})
+.then(res => res.json())
+.then(result => {
+  if (result.status === "success") {
+    alert("送信成功！");
+    addScoreModal.classList.add("hidden");
+  } else {
+    alert("送信失敗: " + result.message);
   }
-});
-
+})
+.catch(err => alert("送信エラー: " + err.message));
+    }

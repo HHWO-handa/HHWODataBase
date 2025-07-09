@@ -297,25 +297,28 @@ addScoreForm.addEventListener("submit", async (e) => {
     }
   }
 
-  try {
-    const res = await fetch("https://script.google.com/macros/s/AKfycbyCXLTlhtA1KtXALCKnhRDIwzrqQGbkaKZ9wAAbZOLQjCdODlXau8Y5Z3DoN7xrtlI/exec", {
-  method: "POST",
-  headers: {
-    "Content-Type": "text/plain"
-  },
-  body: JSON.stringify({
-    action: "addScore",
-    data: scoreData
-  })
-})
-.then(res => res.json())
-.then(result => {
+try {
+  const res = await fetch("https://script.google.com/macros/s/AKfycbyCXLTlhtA1KtXALCKnhRDIwzrqQGbkaKZ9wAAbZOLQjCdODlXau8Y5Z3DoN7xrtlI/exec", {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain"
+    },
+    body: JSON.stringify({
+      action: "addScore",
+      data: scoreData
+    })
+  });
+
+  const result = await res.json();
+
   if (result.status === "success") {
     alert("送信成功！");
     addScoreModal.classList.add("hidden");
   } else {
     alert("送信失敗: " + result.message);
   }
-})
-.catch(err => alert("送信エラー: " + err.message));
-    }
+
+} catch (err) {
+  alert("送信エラー: " + err.message);
+}
+

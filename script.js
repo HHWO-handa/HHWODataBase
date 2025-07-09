@@ -322,3 +322,4 @@ try {
   alert("送信エラー: " + err.message);
 }
 
+}); 

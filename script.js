@@ -19,7 +19,7 @@ let allData = [];
 let allInstrumentData = [];
 
 // 楽譜データ取得
-fetch("https://script.google.com/macros/s/AKfycbxjQ6tysiYgnOf0-rBfCxqF2uJU52r41ZD1QbNJuz20o_78XdlGTMPxTUp3rRH80ZM/exec?sheet=ScoreDataBase")
+fetch("https://script.google.com/macros/s/AKfycbyuj66NdUBlEHybBu3WoXwo9IsmByHfnCIFMjoA6KJqRT5h9nBW-0jqWKwjYrEty64/exec?sheet=ScoreDataBase")
     .then(res => res.json())
     .then(data => {
         allData = data;
@@ -64,7 +64,7 @@ function showDetail(item) {
 }
 
 // 楽器データ取得
-fetch("https://script.google.com/macros/s/AKfycbxjQ6tysiYgnOf0-rBfCxqF2uJU52r41ZD1QbNJuz20o_78XdlGTMPxTUp3rRH80ZM/exec?sheet=InstrumentDataBase")
+fetch("https://script.google.com/macros/s/AKfycbyuj66NdUBlEHybBu3WoXwo9IsmByHfnCIFMjoA6KJqRT5h9nBW-0jqWKwjYrEty64/exec?sheet=InstrumentDataBase")
     .then(res => res.json())
     .then(data => allInstrumentData = data)
     .catch(err => alert("楽器データ取得エラー: " + err));
@@ -298,7 +298,7 @@ addScoreForm.addEventListener("submit", async (e) => {
   }
 
   try {
-    const res = await fetch("https://script.google.com/macros/s/AKfycbxjQ6tysiYgnOf0-rBfCxqF2uJU52r41ZD1QbNJuz20o_78XdlGTMPxTUp3rRH80ZM/exec", {
+    const res = await fetch("https://script.google.com/macros/s/AKfycbyuj66NdUBlEHybBu3WoXwo9IsmByHfnCIFMjoA6KJqRT5h9nBW-0jqWKwjYrEty64/exec", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

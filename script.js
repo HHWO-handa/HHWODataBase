@@ -250,64 +250,75 @@ closeCameraBtn.addEventListener("click", () => {
 //以下、楽譜追加機能
 //以下、楽譜追加機能
 
+// モーダル要素の取得
 const addScoreBtn = document.getElementById("addScoreBtn");
 const addScoreModal = document.getElementById("addScoreModal");
-const cancelAddBtn = document.getElementById("cancelAddBtn");
 const addScoreForm = document.getElementById("addScoreForm");
+const cancelAddScore = document.getElementById("cancelAddScore");
 
-// モーダル開く
+// 楽譜追加モーダル開く
 addScoreBtn.addEventListener("click", () => {
-  // 最大の楽譜番号を取得して+1（文字列→数値）
-  const maxScoreNo = allData.reduce((max, item) => {
-    const num = parseInt(item.scoreNo);
-    return isNaN(num) ? max : Math.max(max, num);
-  }, 0);
-  document.getElementById("scoreNo").value = maxScoreNo + 1;
-
+  // 最大の楽譜番号を自動で入力
+  const maxNo = allData.reduce((max, item) => Math.max(max, Number(item.scoreNo) || 0), 0);
+  document.getElementById("addScoreNo").value = maxNo + 1;
   addScoreModal.classList.remove("hidden");
-  topBar.classList.add("hidden");
-  bottomNav.classList.add("hidden");
 });
 
-// モーダル閉じる
-cancelAddBtn.addEventListener("click", () => {
+// モーダルキャンセル
+cancelAddScore.addEventListener("click", () => {
   addScoreModal.classList.add("hidden");
-  topBar.classList.remove("hidden");
-  bottomNav.classList.remove("hidden");
 });
 
-// フォーム送信
-addScoreForm.addEventListener("submit", (e) => {
+// 楽譜追加送信処理
+addScoreForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-  
-  const formData = {
-    scoreNo: document.getElementById("scoreNo").value,
-    title: document.getElementById("title").value,
-    titleKana: document.getElementById("titleKana").value,
-    titleEn: document.getElementById("titleEn").value,
-    composer: document.getElementById("composer").value,
-    artist: document.getElementById("artist").value,
-    fiftySound: document.getElementById("fiftySound").value,
-    alphabet: document.getElementById("alphabet").value,
-    genre: document.getElementById("genre").value,
-    arrangement: document.getElementById("arrangement").value,
-    taskYear: document.getElementById("taskYear").value,
-    memo: document.getElementById("memo").value
+
+  const scoreData = {
+    scoreNo: document.getElementById("addScoreNo").value,
+    title: document.getElementById("addTitle").value,
+    titleKana: document.getElementById("addTitleKana").value,
+    titleEn: document.getElementById("addTitleEn").value,
+    composer: document.getElementById("addComposer").value,
+    artist: document.getElementById("addArtist").value,
+    fiftySound: document.getElementById("addFiftySound").value,
+    alphabet: document.getElementById("addAlphabet").value,
+    genre: document.getElementById("addGenre").value,
+    arrangement: document.getElementById("addArrangement").value,
+    taskYear: document.getElementById("addTaskYear").value,
+    memo: document.getElementById("addMemo").value
   };
 
-  // バリデーション通過済みなので送信
-  fetch("https://script.google.com/macros/s/AKfycbxjQ6tysiYgnOf0-rBfCxqF2uJU52r41ZD1QbNJuz20o_78XdlGTMPxTUp3rRH80ZM/exec", {
-    method: "POST",
-    body: JSON.stringify({ action: "addScore", data: formData }),
-    headers: { "Content-Type": "application/json" }
-  })
-  .then(res => res.json())
-  .then(res => {
-    alert("追加完了");
-    addScoreModal.classList.add("hidden");
-    topBar.classList.remove("hidden");
-    bottomNav.classList.remove("hidden");
-    location.reload(); // 再読み込みで反映
-  })
-  .catch(err => alert("送信失敗: " + err));
+  // 必須チェック（さらに厳密にしたい場合は pattern 属性と組み合わせて）
+  const requiredFields = ["title", "composer", "fiftySound", "genre", "arrangement"];
+  for (const field of requiredFields) {
+    if (!scoreData[field]) {
+      alert("必須項目が未入力です");
+      return;
+    }
+  }
+
+  try {
+    const res = await fetch("https://script.google.com/macros/s/AKfycbxjQ6tysiYgnOf0-rBfCxqF2uJU52r41ZD1QbNJuz20o_78XdlGTMPxTUp3rRH80ZM/exec", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        action: "addScore",
+        data: scoreData
+      })
+    });
+
+    const result = await res.json();
+    if (result.status === "success") {
+      alert("送信成功！");
+      addScoreModal.classList.add("hidden");
+    } else {
+      alert("送信失敗: " + result.message);
+    }
+
+  } catch (err) {
+    alert("送信エラー: " + err.message);
+  }
 });
+

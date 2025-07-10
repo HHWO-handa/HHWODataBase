@@ -19,16 +19,33 @@ let allData = [];
 let allInstrumentData = [];
 
 // 楽譜データ取得
-fetch("https://script.google.com/macros/s/AKfycbzh-QqWa71HAgFGe4_68pK84PJOoKeGDECwt3U0sr825mLn9KA2Y0mgVFkGkctVKpE/exec?sheet=ScoreDataBase")
-  .then(res => {
-    if (!res.ok) throw new Error("サーバーエラー: " + res.status);
-    return res.json();
-  })
+//fetch("https://script.google.com/macros/s/AKfycbzh-QqWa71HAgFGe4_68pK84PJOoKeGDECwt3U0sr825mLn9KA2Y0mgVFkGkctVKpE/exec?sheet=ScoreDataBase")
+//  .then(res => {
+//    if (!res.ok) throw new Error("サーバーエラー: " + res.status);
+//    return res.json();
+//  })
+//  .then(data => {
+//    allData = data;
+//    renderList(allData);
+//  })
+//  .catch(err => alert("データ取得エラー: " + err.message));
+
+// 楽譜データ取得
+const formData = new URLSearchParams();
+formData.append("action", "getScoreData");
+formData.append("sheet", "ScoreDataBase");
+
+fetch("https://script.google.com/macros/s/AKfycbzpeXfQwAM7nkiJ6wqL76-L5M59HOOkMYbeWxF0JwrpNGSZIb9xIk5v5ZMf9yiyat0/exec", {
+  method: "POST",
+  headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  body: formData.toString()
+})
+  .then(res => res.json())
   .then(data => {
     allData = data;
     renderList(allData);
   })
-  .catch(err => alert("データ取得エラー: " + err.message));
+  .catch(err => alert("取得エラー: " + err.message));
 
 function renderList(data) {
   const list = document.getElementById("scoreList");
@@ -38,13 +55,16 @@ function renderList(data) {
         li.innerHTML = `
             <span class="col fifty">${item.fiftySound}</span>
             <span class="col title">${item.title}</span>
-            <span class="col genre">${item.genre}</span>
+           <span class="col genre">${item.genre}</span>
             <span class="col arrangement">${item.arrangement}</span>
-        `;
+       `;
         li.addEventListener("click", () => showDetail(item));
         scoreList.appendChild(li);
     });
 }
+
+
+
 
 function showDetail(item) {
     detailContent.innerHTML = `
@@ -66,11 +86,11 @@ function showDetail(item) {
     topBar.classList.add("hidden");
 }
 
-// 楽器データ取得
-fetch("https://script.google.com/macros/s/AKfycbzh-QqWa71HAgFGe4_68pK84PJOoKeGDECwt3U0sr825mLn9KA2Y0mgVFkGkctVKpE/exec?sheet=InstrumentDataBase")
-    .then(res => res.json())
-    .then(data => allInstrumentData = data)
-    .catch(err => alert("楽器データ取得エラー: " + err));
+// 楽器データ取得現在動作しません。
+//fetch("https://script.google.com/macros/s/AKfycbzh-QqWa71HAgFGe4_68pK84PJOoKeGDECwt3U0sr825mLn9KA2Y0mgVFkGkctVKpE/exec?sheet=InstrumentDataBase")
+//    .then(res => res.json())
+ //   .then(data => allInstrumentData = data)
+ //   .catch(err => alert("楽器データ取得エラー: " + err));
 
 function renderInstrumentList(data) {
       const list = document.getElementById("instrumentList");
@@ -307,7 +327,7 @@ addScoreForm.addEventListener("submit", async (e) => {
   }
 
   try {
-    const res = await fetch("https://script.google.com/macros/s/AKfycbzh-QqWa71HAgFGe4_68pK84PJOoKeGDECwt3U0sr825mLn9KA2Y0mgVFkGkctVKpE/exec", {
+    const res = await fetch("https://script.google.com/macros/s/AKfycbzpeXfQwAM7nkiJ6wqL76-L5M59HOOkMYbeWxF0JwrpNGSZIb9xIk5v5ZMf9yiyat0/exec", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"

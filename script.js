@@ -92,6 +92,24 @@ function showDetail(item) {
  //   .then(data => allInstrumentData = data)
  //   .catch(err => alert("楽器データ取得エラー: " + err));
 
+// 楽器データ取得（POST版）
+const instrumentDataForm = new URLSearchParams();
+instrumentDataForm.append("action", "getScoreData");
+instrumentDataForm.append("sheet", "InstrumentDataBase");
+
+fetch("https://script.google.com/macros/s/AKfycbxcagNm1MLlR__ahw1EezETE4YDNdRM4mnikUYu-Rewn8YVIi4IJPf_k76ogZgn0OE/exec", {
+  method: "POST",
+  headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  body: instrumentDataForm.toString()
+})
+  .then(res => res.json())
+  .then(data => {
+    allInstrumentData = data;
+  })
+  .catch(err => alert("楽器データ取得エラー: " + err.message));
+
+
+
 function renderInstrumentList(data) {
       const list = document.getElementById("instrumentList");
   list.innerHTML = "";  // リストだけ消去

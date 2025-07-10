@@ -270,36 +270,58 @@ cancelAddScore.addEventListener("click", () => {
 });
 
 // 楽譜追加送信処理
-const formData = new URLSearchParams();
-formData.append("action", "addScore");
-formData.append("scoreNo", scoreData.scoreNo);
-formData.append("title", scoreData.title);
-formData.append("titleKana", scoreData.titleKana);
-formData.append("titleEn", scoreData.titleEn);
-formData.append("composer", scoreData.composer);
-formData.append("artist", scoreData.artist);
-formData.append("fiftySound", scoreData.fiftySound);
-formData.append("alphabet", scoreData.alphabet);
-formData.append("genre", scoreData.genre);
-formData.append("arrangement", scoreData.arrangement);
-formData.append("taskYear", scoreData.taskYear);
-formData.append("memo", scoreData.memo);
+addScoreForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-// fetch 呼び出しはそのままでOK
-const res = await fetch("https://script.google.com/macros/s/AKfycbxM3GRCn0s3upfhlEtPubVShuYzUMSgCiF1vUqKH373KVkcE9IY5osDn3bUD2CJ9eQ/exec", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/x-www-form-urlencoded"
-  },
-  body: formData.toString()
+  const scoreData = {
+    scoreNo: document.getElementById("addScoreNo").value,
+    title: document.getElementById("addTitle").value,
+    titleKana: document.getElementById("addTitleKana").value,
+    titleEn: document.getElementById("addTitleEn").value,
+    composer: document.getElementById("addComposer").value,
+    artist: document.getElementById("addArtist").value,
+    fiftySound: document.getElementById("addFiftySound").value,
+    alphabet: document.getElementById("addAlphabet").value,
+    genre: document.getElementById("addGenre").value,
+    arrangement: document.getElementById("addArrangement").value,
+    taskYear: document.getElementById("addTaskYear").value,
+    memo: document.getElementById("addMemo").value
+  };
+
+  const requiredFields = ["title", "composer", "fiftySound", "genre", "arrangement"];
+  for (const field of requiredFields) {
+    if (!scoreData[field]) {
+      alert("必須項目が未入力です");
+      return;
+    }
+  }
+
+  // ✅ URLSearchParamsを使ってformDataを作成
+  const formData = new URLSearchParams();
+  formData.append("action", "addScore");
+  for (const key in scoreData) {
+    formData.append(key, scoreData[key]);
+  }
+
+  try {
+    const res = await fetch("https://script.google.com/macros/s/AKfycbxM3GRCn0s3upfhlEtPubVShuYzUMSgCiF1vUqKH373KVkcE9IY5osDn3bUD2CJ9eQ/exec", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: formData.toString()
+    });
+
+    const result = await res.json();
+
+    if (result.status === "success") {
+      alert("送信成功！");
+      addScoreModal.classList.add("hidden");
+    } else {
+      alert("送信失敗: " + result.message);
+    }
+
+  } catch (err) {
+    alert("送信エラー: " + err.message);
+  }
 });
-
-const result = await res.json();
-
-if (result.status === "success") {
-  alert("送信成功！");
-  addScoreModal.classList.add("hidden");
-  // 必要なら再読み込みなども
-} else {
-  alert("送信失敗: " + result.message);
-}

@@ -19,13 +19,16 @@ let allData = [];
 let allInstrumentData = [];
 
 // 楽譜データ取得
-fetch("https://script.google.com/macros/s/AKfycbxcagNm1MLlR__ahw1EezETE4YDNdRM4mnikUYu-Rewn8YVIi4IJPf_k76ogZgn0OE/exec?sheet=ScoreDataBase")
-    .then(res => res.json())
-    .then(data => {
-        allData = data;
-        renderList(allData);
-    })
-    .catch(err => alert("データ取得エラー: " + err));
+fetch("https://script.google.com/macros/s/AKfycbxy-0yYj2MF_eBw5XFtijiqn2FgnYAIpldFg7w7F4cYiw7vaQNLtk7bjE8Oo3DCsiI/exec?sheet=ScoreDataBase")
+  .then(res => {
+    if (!res.ok) throw new Error("サーバーエラー: " + res.status);
+    return res.json();
+  })
+  .then(data => {
+    allData = data;
+    renderList(allData);
+  })
+  .catch(err => alert("データ取得エラー: " + err.message));
 
 function renderList(data) {
   const list = document.getElementById("scoreList");
@@ -64,7 +67,7 @@ function showDetail(item) {
 }
 
 // 楽器データ取得
-fetch("https://script.google.com/macros/s/AKfycbxcagNm1MLlR__ahw1EezETE4YDNdRM4mnikUYu-Rewn8YVIi4IJPf_k76ogZgn0OE/exec?sheet=InstrumentDataBase")
+fetch("https://script.google.com/macros/s/AKfycbxy-0yYj2MF_eBw5XFtijiqn2FgnYAIpldFg7w7F4cYiw7vaQNLtk7bjE8Oo3DCsiI/exec?sheet=InstrumentDataBase")
     .then(res => res.json())
     .then(data => allInstrumentData = data)
     .catch(err => alert("楽器データ取得エラー: " + err));
@@ -304,7 +307,7 @@ addScoreForm.addEventListener("submit", async (e) => {
   }
 
   try {
-    const res = await fetch("https://script.google.com/macros/s/AKfycbxcagNm1MLlR__ahw1EezETE4YDNdRM4mnikUYu-Rewn8YVIi4IJPf_k76ogZgn0OE/exec", {
+    const res = await fetch("https://script.google.com/macros/s/AKfycbxy-0yYj2MF_eBw5XFtijiqn2FgnYAIpldFg7w7F4cYiw7vaQNLtk7bjE8Oo3DCsiI/exec", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"

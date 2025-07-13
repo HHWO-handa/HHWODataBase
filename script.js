@@ -18,7 +18,7 @@ const bottomNav = document.getElementById("bottomNav");
 let allData = [];
 let allInstrumentData = [];
 
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbwqUadxcvgCw3yoZLR2-U_VYmfcv1_jZA7lhs2P_SM3SF-niCNjDXS2c6C3zdWddBQ/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbz515Qn3XADu7SHeNmMELWzzB1_EkYpuBDvdH-zjFZ-R_Vv2SlaEVy7TlU57yrNwVQ/exec';
 
 
 function fetchScores() {

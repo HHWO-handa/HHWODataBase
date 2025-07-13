@@ -46,6 +46,7 @@ function fetchScores() {
         memo: row["備考"] || ""
       }));
 console.log("取得データ:", data);
+       allData = formatted; // 検索機能で使用するため保持
       renderList(formatted);
     })
     .catch(err => {

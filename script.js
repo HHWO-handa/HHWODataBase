@@ -18,7 +18,7 @@ const bottomNav = document.getElementById("bottomNav");
 let allData = [];
 let allInstrumentData = [];
 
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbz515Qn3XADu7SHeNmMELWzzB1_EkYpuBDvdH-zjFZ-R_Vv2SlaEVy7TlU57yrNwVQ/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbzfV4PClClZE304OrUs6iGby6eDXuzFLc2Ta8rnc9fw2LVZ3CwSHc7tc5lSIpBvuaE/exec';
 
 
 function fetchScores() {
@@ -45,7 +45,7 @@ function fetchScores() {
         taskYear: row["課題曲年"] || "",
         memo: row["備考"] || ""
       }));
-
+console.log("取得データ:", data);
       renderList(formatted);
     })
     .catch(err => {

@@ -96,8 +96,10 @@ function generateDetailBlock(label, value) {
 }
 
 
-window.addEventListener("DOMContentLoaded", fetchScores);
-
+window.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("scoreList").classList.remove("hidden");
+  fetchScores();
+});
 
 
 

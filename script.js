@@ -18,34 +18,40 @@ const bottomNav = document.getElementById("bottomNav");
 let allData = [];
 let allInstrumentData = [];
 
-// 楽譜データ取得
-//fetch("https://script.google.com/macros/s/AKfycbzh-QqWa71HAgFGe4_68pK84PJOoKeGDECwt3U0sr825mLn9KA2Y0mgVFkGkctVKpE/exec?sheet=ScoreDataBase")
-//  .then(res => {
-//    if (!res.ok) throw new Error("サーバーエラー: " + res.status);
-//    return res.json();
-//  })
-//  .then(data => {
-//    allData = data;
-//    renderList(allData);
-//  })
-//  .catch(err => alert("データ取得エラー: " + err.message));
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbwqUadxcvgCw3yoZLR2-U_VYmfcv1_jZA7lhs2P_SM3SF-niCNjDXS2c6C3zdWddBQ/exec';
 
-// 楽譜データ取得
-const formData = new URLSearchParams();
-formData.append("action", "getScoreData");
-formData.append("sheet", "ScoreDataBase");
 
-fetch("https://script.google.com/macros/s/AKfycbzpeXfQwAM7nkiJ6wqL76-L5M59HOOkMYbeWxF0JwrpNGSZIb9xIk5v5ZMf9yiyat0/exec", {
-  method: "POST",
-  headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  body: formData.toString()
-})
-  .then(res => res.json())
-  .then(data => {
-    allData = data;
-    renderList(allData);
+function fetchScores() {
+  const params = new URLSearchParams();
+  params.append("mode", "getScores");
+
+  fetch(GAS_URL, {
+    method: "POST",
+    body: params
   })
-  .catch(err => alert("取得エラー: " + err.message));
+    .then(res => res.json())
+    .then(data => {
+      const formatted = data.scores.map(row => ({
+        scoreNo: row["楽譜番号"] || "",
+        title: row["曲名"] || "",
+        titleEn: row["曲名（English）"] || "",
+        titleKana: row["曲名（ふりがな）"] || "",
+        composer: row["作曲者"] || "",
+        artist: row["アーティスト"] || "",
+        fiftySound: row["50音"] || "",
+        alphabet: row["アルファベット"] || "",
+        genre: row["ジャンル"] || "",
+        arrangement: row["編成"] || "",
+        taskYear: row["課題曲年"] || "",
+        memo: row["備考"] || ""
+      }));
+
+      renderList(formatted);
+    })
+    .catch(err => {
+      console.error("取得エラー:", err);
+    });
+}
 
 function renderList(data) {
   const list = document.getElementById("scoreList");
@@ -62,8 +68,6 @@ function renderList(data) {
         scoreList.appendChild(li);
     });
 }
-
-
 
 
 function showDetail(item) {
@@ -86,6 +90,16 @@ function showDetail(item) {
     topBar.classList.add("hidden");
 }
 
+function generateDetailBlock(label, value) {
+  return `<p><strong>${label}：</strong> ${value || "-"}</p>`;
+}
+
+
+window.addEventListener("DOMContentLoaded", fetchScores);
+
+
+
+
 // 楽器データ取得現在動作しません。
 //fetch("https://script.google.com/macros/s/AKfycbzh-QqWa71HAgFGe4_68pK84PJOoKeGDECwt3U0sr825mLn9KA2Y0mgVFkGkctVKpE/exec?sheet=InstrumentDataBase")
 //    .then(res => res.json())
@@ -97,7 +111,7 @@ const instrumentDataForm = new URLSearchParams();
 instrumentDataForm.append("action", "getScoreData");
 instrumentDataForm.append("sheet", "InstrumentDataBase");
 
-fetch("https://script.google.com/macros/s/AKfycbxcagNm1MLlR__ahw1EezETE4YDNdRM4mnikUYu-Rewn8YVIi4IJPf_k76ogZgn0OE/exec", {
+fetch(GAS_URL, {
   method: "POST",
   headers: { "Content-Type": "application/x-www-form-urlencoded" },
   body: instrumentDataForm.toString()
@@ -291,78 +305,59 @@ closeCameraBtn.addEventListener("click", () => {
 //以下、楽譜追加機能
 //以下、楽譜追加機能
 
-// モーダル要素の取得
-const addScoreBtn = document.getElementById("addScoreBtn");
-const addScoreModal = document.getElementById("addScoreModal");
-const addScoreForm = document.getElementById("addScoreForm");
-const cancelAddScore = document.getElementById("cancelAddScore");
+function openAddScoreModal() {
+  document.getElementById("addScoreModal").style.display = "block";
 
-// 楽譜追加モーダル開く
-addScoreBtn.addEventListener("click", () => {
-  // 最大の楽譜番号を自動で入力
-  const maxNo = allData.reduce((max, item) => Math.max(max, Number(item.scoreNo) || 0), 0);
-  document.getElementById("addScoreNo").value = maxNo + 1;
-  addScoreModal.classList.remove("hidden");
-});
-
-// モーダルキャンセル
-cancelAddScore.addEventListener("click", () => {
-  addScoreModal.classList.add("hidden");
-});
-
-// 楽譜追加送信処理
-addScoreForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const scoreData = {
-    scoreNo: document.getElementById("addScoreNo").value,
-    title: document.getElementById("addTitle").value,
-    titleKana: document.getElementById("addTitleKana").value,
-    titleEn: document.getElementById("addTitleEn").value,
-    composer: document.getElementById("addComposer").value,
-    artist: document.getElementById("addArtist").value,
-    fiftySound: document.getElementById("addFiftySound").value,
-    alphabet: document.getElementById("addAlphabet").value,
-    genre: document.getElementById("addGenre").value,
-    arrangement: document.getElementById("addArrangement").value,
-    taskYear: document.getElementById("addTaskYear").value,
-    memo: document.getElementById("addMemo").value
-  };
-
-  const requiredFields = ["title", "composer", "fiftySound", "genre", "arrangement"];
-  for (const field of requiredFields) {
-    if (!scoreData[field]) {
-      alert("必須項目が未入力です");
-      return;
-    }
-  }
-
-  // ✅ URLSearchParamsを使ってformDataを作成
-  const formData = new URLSearchParams();
-  formData.append("action", "addScore");
-  for (const key in scoreData) {
-    formData.append(key, scoreData[key]);
-  }
-
-  try {
-    const res = await fetch("https://script.google.com/macros/s/AKfycbzpeXfQwAM7nkiJ6wqL76-L5M59HOOkMYbeWxF0JwrpNGSZIb9xIk5v5ZMf9yiyat0/exec", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: formData.toString()
+  // 自動採番処理（最大番号＋1）
+  fetch(`${GAS_URL}?mode=getScoreList`)
+    .then(res => res.json())
+    .then(data => {
+      const max = data.scores.reduce((max, row) => {
+        const num = parseInt(row.scoreNumber);
+        return (!isNaN(num) && num > max) ? num : max;
+      }, 0);
+      document.getElementById("scoreNumber").value = (max + 1).toString().padStart(5, '0');
     });
+}
 
-    const result = await res.json();
+function closeAddScoreModal() {
+  document.getElementById("addScoreModal").style.display = "none";
+}
 
-    if (result.status === "success") {
-      alert("送信成功！");
-      addScoreModal.classList.add("hidden");
-    } else {
-      alert("送信失敗: " + result.message);
-    }
+document.getElementById("scoreForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const form = e.target;
 
-  } catch (err) {
-    alert("送信エラー: " + err.message);
+  if (!form.checkValidity()) {
+    alert("入力内容を確認してください");
+    return;
   }
+
+  const formData = new FormData(form);
+  const params = new URLSearchParams();
+  params.append("mode", "addScore");
+  for (const [key, val] of formData.entries()) {
+    params.append(key, val);
+  }
+
+  fetch(GAS_URL, {
+    method: "POST",
+    body: params
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === "score added") {
+        alert("登録完了しました");
+        closeAddScoreModal();
+        form.reset();
+      } else {
+        alert("登録に失敗しました");
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert("通信エラー");
+    });
 });
+
+

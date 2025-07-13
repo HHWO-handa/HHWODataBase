@@ -355,6 +355,7 @@ document.getElementById("scoreForm").addEventListener("submit", function (e) {
         alert("登録完了しました");
         closeAddScoreModal();
         form.reset();
+          fetchAndDisplayScores();
       } else {
         alert("登録に失敗しました");
       }

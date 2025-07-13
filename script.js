@@ -32,18 +32,18 @@ function fetchScores() {
     .then(res => res.json())
     .then(data => {
       const formatted = data.scores.map(row => ({
-        scoreNo: row["楽譜番号"] || "",
-        title: row["曲名"] || "",
-        titleEn: row["曲名（English）"] || "",
-        titleKana: row["曲名（ふりがな）"] || "",
-        composer: row["作曲者"] || "",
-        artist: row["アーティスト"] || "",
-        fiftySound: row["50音"] || "",
-        alphabet: row["アルファベット"] || "",
-        genre: row["ジャンル"] || "",
-        arrangement: row["編成"] || "",
-        taskYear: row["課題曲年"] || "",
-        memo: row["備考"] || ""
+        scoreNo: row["scoreNumber"] || "",
+        title: row["title"] || "",
+        titleEn: row["titleEn"] || "",
+        titleKana: row["titleKana"] || "",
+        composer: row["composer"] || "",
+        artist: row["artist"] || "",
+        fiftySound: row["kanaIndex"] || "",
+        alphabet: row["alphaIndex"] || "",
+        genre: row["genre"] || "",
+        arrangement: row["formation"] || "",
+        taskYear: row["contestYear"] || "",
+        memo: row["note"] || ""
       }));
 console.log("取得データ:", data);
        allData = formatted; // 検索機能で使用するため保持

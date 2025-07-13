@@ -58,8 +58,21 @@
 
 
 <!-- 楽譜追加モーダル -->
-<div id="addScoreModal" class="modal hidden">
- <div class="modal-content">
+<div id="addScoreModal" style="
+  display: none;
+  position: fixed;
+  top: 2%;
+  left: 10%;
+  width: 80%;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  z-index: 1000;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  border-radius: 8px;
+">
   <h3>楽譜追加</h3>
   <form id="scoreForm">
     <div>
@@ -133,7 +146,6 @@
       <label>備考</label><br>
       <input type="text" name="note">
     </div>
-　 </div>
     <br>
     <button type="submit">登録</button>
     <button type="button" onclick="closeAddScoreModal()">閉じる</button>

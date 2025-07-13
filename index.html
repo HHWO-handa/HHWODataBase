@@ -24,7 +24,7 @@
     <input type="text" id="searchInput" placeholder="検索">
     <button id="filterBtn">絞り込み</button>
       <button id="addScoreBtn">＋</button>
-　　 <button id="qrInstrumentBtn">📷</button>
+　　 <button onclick="openAddScoreModal()">📷</button>
   </div>
 </div>
 
@@ -58,55 +58,85 @@
 
 
 <!-- 楽譜追加モーダル -->
-<div id="addScoreModal" class="modal hidden">
-  <div class="modal-content">
-    <h2>楽譜追加</h2>
-    <form id="addScoreForm">
-      <label>楽譜番号（自動）<br><input type="text" id="addScoreNo" disabled></label><br>
-      <label>曲名*<br><input type="text" id="addTitle" required></label><br>
-      <label>曲名（ふりがな）<br><input type="text" id="addTitleKana"></label><br>
-      <label>曲名（English）<br><input type="text" id="addTitleEn"></label><br>
-      <label>作曲者*<br><input type="text" id="addComposer" required></label><br>
-      <label>アーティスト<br><input type="text" id="addArtist"></label><br>
-      <label>50音*（ひらがな1文字）<br><input type="text" id="addFiftySound" maxlength="1" pattern="^[ぁ-ん]$" required></label><br>
-      <label>アルファベット（大文字1文字）<br><input type="text" id="addAlphabet" maxlength="1" pattern="^[A-Z]$"></label><br>
-      <label>ジャンル*<br>
-        <select id="addGenre" required>
-          <option value="">選択</option>
-          <option>ポップス</option>
-          <option>クラシック</option>
-          <option>式典音楽</option>
-          <option>課題曲</option>
-          <option>アンサンブル</option>
-          <option>マーチ</option>
-          <option>その他</option>
-        </select>
-      </label><br>
-      <label>編成*<br>
-        <select id="addArrangement" required>
-          <option value="">選択</option>
-          <option>吹奏楽</option>
-          <option>木管</option>
-          <option>金管</option>
-          <option>打楽器</option>
-          <option>フルート</option>
-          <option>クラリネット</option>
-          <option>サックス</option>
-          <option>トランペット</option>
-          <option>ホルン</option>
-          <option>トロンボーン</option>
-          <option>フレックス</option>
-          <option>バリ・チューバ</option>
-        </select>
-      </label><br>
-      <label>課題曲年（4桁）<br><input type="text" id="addTaskYear" maxlength="4" pattern="^[0-9]{4}$"></label><br>
-      <label>備考<br><textarea id="addMemo"></textarea></label><br>
-      <button type="submit">送信</button>
-      <button type="button" id="cancelAddScore">キャンセル</button>
-    </form>
-  </div>
+<div id="addScoreModal" style="display:none; position:fixed; top:10%; left:10%; width:80%; background:white; padding:20px; border:1px solid #ccc; z-index:1000;">
+  <h3>楽譜追加</h3>
+  <form id="scoreForm">
+    <div>
+      <label>楽譜番号（自動）</label><br>
+      <input type="text" id="scoreNumber" name="scoreNumber" readonly>
+    </div>
+    <div>
+      <label>曲名 *</label><br>
+      <input type="text" name="title" required>
+    </div>
+    <div>
+      <label>曲名（English）</label><br>
+      <input type="text" name="titleEn">
+    </div>
+    <div>
+      <label>曲名（ふりがな） *</label><br>
+      <input type="text" name="titleKana" required>
+    </div>
+    <div>
+      <label>作曲者 *</label><br>
+      <input type="text" name="composer" required>
+    </div>
+    <div>
+      <label>アーティスト</label><br>
+      <input type="text" name="artist">
+    </div>
+    <div>
+      <label>50音（ひらがな1文字） *</label><br>
+      <input type="text" name="kanaIndex" pattern="^[ぁ-ん]$" title="ひらがな1文字" required>
+    </div>
+    <div>
+      <label>アルファベット（A-Z1文字）</label><br>
+      <input type="text" name="alphaIndex" pattern="^[A-Z]$" title="アルファベット大文字1文字">
+    </div>
+    <div>
+      <label>ジャンル *</label><br>
+      <select name="genre" required>
+        <option value="">選択してください</option>
+        <option>ポップス</option>
+        <option>クラシック</option>
+        <option>式典音楽</option>
+        <option>課題曲</option>
+        <option>アンサンブル</option>
+        <option>マーチ</option>
+        <option>その他</option>
+      </select>
+    </div>
+    <div>
+      <label>編成 *</label><br>
+      <select name="formation" required>
+        <option value="">選択してください</option>
+        <option>吹奏楽</option>
+        <option>木管</option>
+        <option>金管</option>
+        <option>打楽器</option>
+        <option>フルート</option>
+        <option>クラリネット</option>
+        <option>サックス</option>
+        <option>トランペット</option>
+        <option>ホルン</option>
+        <option>トロンボーン</option>
+        <option>フレックス</option>
+        <option>バリ・チューバ</option>
+      </select>
+    </div>
+    <div>
+      <label>課題曲年（数字4桁）</label><br>
+      <input type="text" name="contestYear" pattern="^[0-9]{4}$" title="4桁の数字">
+    </div>
+    <div>
+      <label>備考</label><br>
+      <input type="text" name="note">
+    </div>
+    <br>
+    <button type="submit">登録</button>
+    <button type="button" onclick="closeAddScoreModal()">閉じる</button>
+  </form>
 </div>
-
 
 
 

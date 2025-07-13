@@ -311,16 +311,18 @@ closeCameraBtn.addEventListener("click", () => {
 function openAddScoreModal() {
   document.getElementById("addScoreModal").style.display = "block";
 
-  // 自動採番処理（最大番号＋1）
-  fetch(`${GAS_URL}?mode=getScoreList`)
-    .then(res => res.json())
-    .then(data => {
-      const max = data.scores.reduce((max, row) => {
-        const num = parseInt(row.scoreNumber);
-        return (!isNaN(num) && num > max) ? num : max;
-      }, 0);
-      document.getElementById("scoreNumber").value = (max + 1).toString().padStart(5, '0');
-    });
+  // Web内の allData から最大の楽譜番号を探す
+  const max = allData.reduce((acc, item) => {
+    const num = parseInt(item.scoreNo, 10);
+    return (!isNaN(num) && num > acc) ? num : acc;
+  }, 0);
+
+  // 次の番号を5桁ゼロ埋めで設定
+  const next = (max + 1).toString().padStart(5, '0');
+
+  const input = document.getElementById("scoreNumber");
+  input.value = next;
+  input.readOnly = false; // 自由に編集できるようにする
 }
 
 function closeAddScoreModal() {

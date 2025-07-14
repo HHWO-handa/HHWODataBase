@@ -204,8 +204,6 @@ btnInstrument.addEventListener("click", () => {
   instrumentList.classList.remove("hidden");
   placeholder.classList.add("hidden");
 
-  document.getElementById("searchInstrumentArea").classList.remove("hidden");
-
   renderInstrumentList(allInstrumentData);
 });
 
@@ -215,8 +213,6 @@ btnRepair.addEventListener("click", () => {
   instrumentList.classList.add("hidden");
   placeholder.textContent = "表示問題なし";
   placeholder.classList.remove("hidden");
-
-  document.getElementById("searchInstrumentArea").classList.add("hidden");
 });
 
 // 楽譜データベース検索・フィルター

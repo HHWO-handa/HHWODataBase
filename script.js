@@ -18,7 +18,7 @@ const bottomNav = document.getElementById("bottomNav");
 let allData = [];
 let allInstrumentData = [];
 
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbzfV4PClClZE304OrUs6iGby6eDXuzFLc2Ta8rnc9fw2LVZ3CwSHc7tc5lSIpBvuaE/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbwjGrzANqStHFvMc9n6BHeKxybFuzmDRrpzv5XhDQu5wlbmonjE911Q7mNsHj0oNgI/exec';
 
 
 function fetchScores() {
@@ -99,76 +99,87 @@ function generateDetailBlock(label, value) {
 window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("scoreList").classList.remove("hidden");
   fetchScores();
+  fetchInstruments();
 });
 
 
 
-// 楽器データ取得現在動作しません。
-//fetch("https://script.google.com/macros/s/AKfycbzh-QqWa71HAgFGe4_68pK84PJOoKeGDECwt3U0sr825mLn9KA2Y0mgVFkGkctVKpE/exec?sheet=InstrumentDataBase")
-//    .then(res => res.json())
- //   .then(data => allInstrumentData = data)
- //   .catch(err => alert("楽器データ取得エラー: " + err));
+function fetchInstruments() {
+  const params = new URLSearchParams();
+  params.append("mode", "getInstruments");
 
-// 楽器データ取得（POST版）
-//const instrumentDataForm = new URLSearchParams();
-//instrumentDataForm.append("action", "getScoreData");
-//instrumentDataForm.append("sheet", "InstrumentDataBase");
+  fetch(GAS_URL, {
+    method: "POST",
+    body: params
+  })
+    .then(res => res.json())
+    .then(data => {
+      const formatted = data.scores.map(row => ({
+        instrumentNo: row["instNumber"] || "",
+        qr: row["QR"] || "",
+        instrumentCode: row["instCode"] || "",
+        instrumentName: row["instName"] || "",
+        startDate: row["Date"] || "",
+        manufacturer: row["Maker"] || "",
+        productName: row["ProductName"] || "",
+        owner: row["owner"] || "",
+        status: row["status"] || "",
+        image: row["image"] || "",
+        equipmentNo: row["EquipNumber"] || ""
+      }));
+console.log("取得データ:", data);
+       allInstrumentData = formatted; // 検索機能で使用するため保持
+      renderList(formatted);
+    })
+    .catch(err => {
+      console.error("取得エラー:", err);
+    });
+}
 
-//fetch(GAS_URL, {
-//  method: "POST",
-//  headers: { "Content-Type": "application/x-www-form-urlencoded" },
-//  body: instrumentDataForm.toString()
-//})
-//  .then(res => res.json())
-//  .then(data => {
-//    allInstrumentData = data;
-//  })
-//  .catch(err => alert("楽器データ取得エラー: " + err.message));
 
 
+function renderInstrumentList(data) {
+      const list = document.getElementById("instrumentList");
+  list.innerHTML = "";  // リストだけ消去
+    data.forEach(item => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+            <div class="instrument-left">
+                <img src="${item.image}" alt="画像">
+                <div class="instrument-infoA">
+                    <span>${item.instrumentName}</span>
+                    <div class="instrument-infoB">
+                       <span>${item.equipmentNo}</span>
+                    </div>
+                </div>
+            </div>
+            <span> ${item.instrumentNo}</span>
+        `;
+        li.addEventListener("click", () => showInstrumentDetail(item));
+        instrumentList.appendChild(li);
+    });
+}
 
-//function renderInstrumentList(data) {
-//      const list = document.getElementById("instrumentList");
-//  list.innerHTML = "";  // リストだけ消去
-//    data.forEach(item => {
-//        const li = document.createElement("li");
-//        li.innerHTML = `
-//            <div class="instrument-left">
-//                <img src="${item.image}" alt="画像">
-//                <div class="instrument-infoA">
-//                    <span>${item.instrumentName}</span>
-//                    <div class="instrument-infoB">
-//                       <span>${item.equipmentNo}</span>
-//                    </div>
-//                </div>
-//            </div>
- //           <span> ${item.instrumentNo}</span>
- //       `;
-//        li.addEventListener("click", () => showInstrumentDetail(item));
-//        instrumentList.appendChild(li);
-//    });
-//}
-
-//function showInstrumentDetail(item) {
-//    detailContent.innerHTML = `
-//        <div class="instrument-detail">
-//        <img src="${item.image}" alt="画像">
-//        </div>
-//        <h2>${item.instrumentName}</h2>
-//        ${generateDetailBlock("楽器番号", item.instrumentNo)}
-//        ${generateDetailBlock("QRコード", item.qr)}
-//        ${generateDetailBlock("楽器コード", item.instrumentCode)}
-//        ${generateDetailBlock("管理開始日", item.startDate)}
-//        ${generateDetailBlock("楽器メーカー", item.manufacturer)}
-//        ${generateDetailBlock("製品名", item.productName)}
-//        ${generateDetailBlock("所有元", item.owner)}
-//        ${generateDetailBlock("楽器状態", item.status)}
-//        ${generateDetailBlock("備品番号", item.equipmentNo)}
-//    `;
-//    modal.classList.remove("hidden");
-//    bottomNav.classList.add("hidden");
-//    topBar.classList.add("hidden");
-//}
+function showInstrumentDetail(item) {
+    detailContent.innerHTML = `
+        <div class="instrument-detail">
+        <img src="${item.image}" alt="画像">
+        </div>
+        <h2>${item.instrumentName}</h2>
+        ${generateDetailBlock("楽器番号", item.instrumentNo)}
+        ${generateDetailBlock("QRコード", item.qr)}
+        ${generateDetailBlock("楽器コード", item.instrumentCode)}
+        ${generateDetailBlock("管理開始日", item.startDate)}
+        ${generateDetailBlock("楽器メーカー", item.manufacturer)}
+        ${generateDetailBlock("製品名", item.productName)}
+        ${generateDetailBlock("所有元", item.owner)}
+        ${generateDetailBlock("楽器状態", item.status)}
+        ${generateDetailBlock("備品番号", item.equipmentNo)}
+    `;
+    modal.classList.remove("hidden");
+    bottomNav.classList.add("hidden");
+    topBar.classList.add("hidden");
+}
 
 // 共通イベント
 closeBtn.addEventListener("click", () => {

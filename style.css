@@ -226,6 +226,8 @@ li {
 }
 
 
+#addInstrumentModal { position: fixed; top:5%; left:10%; width:80%; max-height:90vh; overflow:auto; background:white; padding:20px; border:1px solid #ccc; z-index:1000; }
+#addInstrumentModal img { display:block; margin-top:10px; }
 
 
 

@@ -152,7 +152,73 @@
   </form>
 </div>
 
+<!-- 楽器追加モーダル -->
+<div id="addInstrumentModal" style="display:none;">
+  <form id="instrumentForm">
+    <h3>楽器追加</h3>
 
+    <!-- 楽器番号（3分割） -->
+    <label>分類 *</label>
+    <select id="instrClass" required>
+      <option value="">選択してください</option>
+      <option value="1">1&nbsp;管楽器</option>
+      <option value="2">2&nbsp;弦楽器</option>
+      <option value="3">3&nbsp;打楽器</option>
+    </select>
+
+    <label>中間番号 *</label>
+    <input type="text" id="instrMid" required readonly />
+
+    <label>下3桁番号 *</label>
+    <input type="text" id="instrEnd" required readonly />
+
+    <!-- 結合用QRコード: hidden -->
+    <input type="hidden" id="instrQRCode" name="qr">
+
+    <label>楽器コード *</label>
+    <input type="text" id="instrCode" name="instrumentCode" required />
+
+    <label>楽器名 *</label>
+    <input type="text" id="instrName" name="instrumentName" required />
+
+    <label>管理開始日 *</label>
+    <input type="date" id="startDate" name="startDate" required />
+
+    <label>メーカー</label>
+    <input type="text" id="manufacturer" name="manufacturer" />
+
+    <label>製品名</label>
+    <input type="text" id="productName" name="productName" />
+
+    <label>所有元 *</label>
+    <select id="owner" name="owner" required>
+      <option value="">選択してください</option>
+      <option>学校備品</option><option>ばらさのグッズ</option>
+      <option>寄付・寄贈</option><option>その他</option>
+    </select>
+
+    <label>楽器状態</label>
+    <input type="text" id="status" name="status" />
+
+    <label>備品番号</label>
+    <input type="text" id="equipmentNo" name="equipmentNo" />
+
+    <label>画像</label>
+    <button type="button" id="btnCaptureImage">写真を撮る</button>
+    <img id="previewImg" style="max-width:100%; display:none;" />
+
+    <br><button type="submit">登録</button>
+    <button type="button" id="closeInstrModal">閉じる</button>
+  </form>
+</div>
+
+<!-- カメラ表示・撮影 -->
+<div id="cameraContainer" style="display:none;">
+  <video id="video" autoplay playsinline style="width:100%; max-height:300px;"></video>
+  <button id="takePhotoBtn">📸 撮影</button>
+  <button id="closeCamera">カメラを閉じる</button>
+  <canvas id="canvas" style="display:none;"></canvas>
+</div>
 
 
     <script src="script.js"></script>

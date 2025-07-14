@@ -18,7 +18,7 @@ const bottomNav = document.getElementById("bottomNav");
 let allData = [];
 let allInstrumentData = [];
 
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbwjGrzANqStHFvMc9n6BHeKxybFuzmDRrpzv5XhDQu5wlbmonjE911Q7mNsHj0oNgI/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbwZQHr3mNRjO9YVSLMCqKN7J11xGrXq37uAKCpU_pgfLVFQOLHE80-oaRA3rSwgwC0/exec';
 
 
 function fetchScores() {
@@ -119,7 +119,7 @@ function fetchInstruments() {
         qr: row["QR"] || "",
         instrumentCode: row["instCode"] || "",
         instrumentName: row["instName"] || "",
-        startDate: row["Date"] || "",
+        startDate: row["startDate"] || "",
         manufacturer: row["Maker"] || "",
         productName: row["ProductName"] || "",
         owner: row["owner"] || "",
@@ -373,4 +373,123 @@ document.getElementById("scoreForm").addEventListener("submit", function (e) {
     });
 });
 
+//以下、楽器追加機能
+//以下、楽器追加機能
+btnInstrument.addEventListener("click", () => {
+  currentPage = "instrument";
+  // ...
+  scoreList.classList.add("hidden");
+  instrumentList.classList.remove("hidden");
+  placeholder.classList.add("hidden");
+  document.getElementById("addInstrumentBtn").style.display="block"; // +ボタンも出す
 
+  renderInstrumentList(allInstrumentData);
+});
+
+// +ボタン押すとモーダル表示
+document.getElementById("addInstrumentBtn").addEventListener("click", openAddInstrumentModal);
+
+// 閉じる
+document.getElementById("closeInstrModal").addEventListener("click", () => {
+  document.getElementById("addInstrumentModal").style.display = "none";
+});
+
+// 自動入力ロジック
+function openAddInstrumentModal() {
+  document.getElementById("addInstrumentModal").style.display = "block";
+
+  const cls = document.getElementById("instrClass");
+  const mid = document.getElementById("instrMid");
+  const end = document.getElementById("instrEnd");
+  const qr = document.getElementById("instrQRCode");
+  const today = new Date().toISOString().slice(0,10);
+  document.getElementById("startDate").value = today;
+
+  cls.addEventListener("change", () => {
+    const c = cls.value;
+    const filtered = allInstrumentData.filter(i => i.instrumentNo.startsWith(c));
+    const mids = filtered.map(i => parseInt(i.instrumentNo.slice(1,3),10)||0);
+    const largestMid = mids.length?Math.max(...mids):0;
+    mid.value = String(largestMid+1).padStart(2,'0');
+
+    const ends = filtered.map(i => parseInt(i.instrumentNo.slice(-3),10)||0);
+    const largestEnd = ends.length?Math.max(...ends):0;
+    end.value = String(largestEnd+1).padStart(3,'0');
+
+    qr.value = c + mid.value + end.value + document.getElementById("instrCode").value;
+  });
+}
+
+// 画像撮影
+document.getElementById("btnCaptureImage").addEventListener("click", () => {
+  qrScanner.start({facingMode:"environment"}, {fps:10, qrbox:250}, () => {}, ()=>{});
+  const imgData = camera.takePhoto(); // 擬似
+  // 実際はライブラリのAPI利用してください
+  document.getElementById("previewImg").src = imgData;
+  document.getElementById("previewImg").style.display = "block";
+});
+
+// フォーム送信
+document.getElementById("instrumentForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const f = e.target;
+  if (!f.checkValidity()) {alert("必須項目を入力してください");return;}
+  const fd = new FormData(f);
+  fd.append("mode","addInstrument");
+  fd.append("imageData", previewImg.src);
+
+  fetch(GAS_URL, { method:"POST", body:fd })
+    .then(r=>r.json()).then(js=>{
+      if(js.status==="ok"){ alert("登録OK");
+        allInstrumentData.push(js.record);
+        renderInstrumentList(allInstrumentData);
+        f.reset();
+        document.getElementById("addInstrumentModal").style.display="none";
+      } else alert("登録失敗");})
+    .catch(e=>alert(e));
+});
+
+
+
+const video = document.getElementById("video");
+const canvas = document.getElementById("canvas");
+const context = canvas.getContext("2d");
+const previewImg = document.getElementById("previewImg");
+let stream;
+
+// 撮影ボタン押下 → カメラ起動
+document.getElementById("btnCaptureImage").addEventListener("click", async () => {
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    video.srcObject = stream;
+    document.getElementById("cameraContainer").style.display = "block";
+  } catch (err) {
+    alert("カメラの起動に失敗しました: " + err.message);
+  }
+});
+
+// 写真を撮る
+document.getElementById("takePhotoBtn").addEventListener("click", () => {
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+  // DataURL 形式で画像データ取得
+  const imageData = canvas.toDataURL("image/png");
+
+  // プレビューに表示
+  previewImg.src = imageData;
+  previewImg.style.display = "block";
+
+  // モーダル内を閉じる
+  document.getElementById("cameraContainer").style.display = "none";
+
+  // カメラ停止
+  stream.getTracks().forEach(track => track.stop());
+});
+
+// カメラを閉じる
+document.getElementById("closeCamera").addEventListener("click", () => {
+  document.getElementById("cameraContainer").style.display = "none";
+  if (stream) stream.getTracks().forEach(track => track.stop());
+});

@@ -375,24 +375,9 @@ document.getElementById("scoreForm").addEventListener("submit", function (e) {
 
 //以下、楽器追加機能
 //以下、楽器追加機能
-btnInstrument.addEventListener("click", () => {
-  currentPage = "instrument";
-  // ...
-  scoreList.classList.add("hidden");
-  instrumentList.classList.remove("hidden");
-  placeholder.classList.add("hidden");
-  document.getElementById("addInstrumentBtn").style.display="block"; // +ボタンも出す
-
-  renderInstrumentList(allInstrumentData);
-});
-
-// +ボタン押すとモーダル表示
-document.getElementById("addInstrumentBtn").addEventListener("click", openAddInstrumentModal);
-
-// 閉じる
-document.getElementById("closeInstrModal").addEventListener("click", () => {
-  document.getElementById("addInstrumentModal").style.display = "none";
-});
+function closeAddInstrumentModal() {
+  document.getElementById("addScoreModal").style.display = "none";
+}
 
 // 自動入力ロジック
 function openAddInstrumentModal() {

@@ -406,13 +406,16 @@ function openAddInstrumentModal() {
 }
 
 // 画像撮影
-document.getElementById("btnCaptureImage").addEventListener("click", () => {
-  qrScanner.start({facingMode:"environment"}, {fps:10, qrbox:250}, () => {}, ()=>{});
-  const imgData = camera.takePhoto(); // 擬似
-  // 実際はライブラリのAPI利用してください
-  document.getElementById("previewImg").src = imgData;
-  document.getElementById("previewImg").style.display = "block";
+document.getElementById("btnCaptureImage").addEventListener("click", async () => {
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    video.srcObject = stream;
+    document.getElementById("cameraContainer").style.display = "block";
+  } catch (err) {
+    alert("カメラの起動に失敗しました: " + err.message);
+  }
 });
+
 
 // フォーム送信
 document.getElementById("instrumentForm").addEventListener("submit", (e) => {
@@ -443,15 +446,6 @@ const previewImg = document.getElementById("previewImg");
 let stream;
 
 // 撮影ボタン押下 → カメラ起動
-document.getElementById("btnCaptureImage").addEventListener("click", async () => {
-  try {
-    stream = await navigator.mediaDevices.getUserMedia({ video: true });
-    video.srcObject = stream;
-    document.getElementById("cameraContainer").style.display = "block";
-  } catch (err) {
-    alert("カメラの起動に失敗しました: " + err.message);
-  }
-});
 
 // 写真を撮る
 document.getElementById("takePhotoBtn").addEventListener("click", () => {

@@ -160,7 +160,7 @@
 
     <!-- 楽器番号（3分割） -->
     <label>分類 *</label>
-    <select id="instrClass" required>
+    <select id="part1" required>
       <option value="">選択してください</option>
       <option value="1">1&nbsp;管楽器</option>
       <option value="2">2&nbsp;弦楽器</option>
@@ -168,10 +168,10 @@
     </select>
 
     <label>中間番号 *</label>
-    <input type="text" id="instrMid" required readonly />
+    <input type="text" id="part2" required readonly />
 
     <label>下3桁番号 *</label>
-    <input type="text" id="instrEnd" required readonly />
+    <input type="text" id="part3" required readonly />
 
     <!-- 結合用QRコード: hidden -->
     <input type="hidden" id="instrQRCode" name="qr">

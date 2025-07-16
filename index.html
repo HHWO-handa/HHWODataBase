@@ -162,16 +162,22 @@
     <label>分類 *</label>
     <select id="part1" required>
       <option value="">選択してください</option>
-      <option value="1">1&nbsp;管楽器</option>
-      <option value="2">2&nbsp;弦楽器</option>
-      <option value="3">3&nbsp;打楽器</option>
+      <option value="1">1&nbsp;フルート・ピッコロ・ダブルリード</option>
+      <option value="2">2&nbsp;クラリネット</option>
+      <option value="3">3&nbsp;サックス</option>
+      <option value="4">4&nbsp;トランペット・コルネット</option>
+      <option value="5">5&nbsp;ホルン</option>
+      <option value="6">6&nbsp;トロンボーン</option>
+      <option value="7">7&nbsp;The Others</option>
+      <option value="8">8&nbsp;パーカッション</option>
+      <option value="9">9&nbsp;その他（予備）</option>
     </select>
 
     <label>中間番号 *</label>
-    <input type="text" id="part2" required readonly />
+   <input type="text" id="part2" name="part2" maxlength="2" pattern="\d{2}" required placeholder="2桁 (例: 01)">
 
     <label>下3桁番号 *</label>
-    <input type="text" id="part3" required readonly />
+      <input type="text" id="part3" name="part3" maxlength="3" pattern="\d{3}" required placeholder="3桁 (例: 001)">
 
     <!-- 結合用QRコード: hidden -->
     <input type="hidden" id="instrQRCode" name="qr">

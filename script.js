@@ -405,6 +405,34 @@ function openAddInstrumentModal() {
   });
 }
 
+//新規システムじどうにゅうりょく
+document.getElementById("part1").addEventListener("change", () => {
+  const part1 = document.getElementById("part1").value;
+  if (!part1) return;
+
+  // 楽器データ（すでに fetch されているデータ）を使用
+  const filtered = allInstrumentData.filter(item => item.instrumentNo && item.instrumentNo.startsWith(part1));
+
+  // 最大の part2 を取得（2〜3桁目）
+  let maxPart2 = 0;
+  filtered.forEach(item => {
+    const val = parseInt(item.instrumentNo.slice(1, 3));
+    if (!isNaN(val)) maxPart2 = Math.max(maxPart2, val);
+  });
+
+  // 全体で最大の part3（下3桁）
+  let maxPart3 = 0;
+  allInstrumentData.forEach(item => {
+    const val = parseInt(item.instrumentNo.slice(-3));
+    if (!isNaN(val)) maxPart3 = Math.max(maxPart3, val);
+  });
+
+  // 自動入力（padStartで桁をそろえる）
+  document.getElementById("part2").value = (maxPart2 + 1).toString().padStart(2, "0");
+  document.getElementById("part3").value = (maxPart3 + 1).toString().padStart(3, "0");
+});
+
+
 // 画像撮影
 document.getElementById("btnCaptureImage").addEventListener("click", async () => {
   try {

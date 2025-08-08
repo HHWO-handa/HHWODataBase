@@ -18,7 +18,7 @@ const bottomNav = document.getElementById("bottomNav");
 let allData = [];
 let allInstrumentData = [];
 
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbw9fRAMrHTXulz_jdwO06M0Rcx5u9PT8T5lzIZnWs0OG39zNNiu5GEekQgcFgipkxk/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbx6iyCPA3rbl0UyiLgrKAkjow5vVzendtcuQ_E6TgP46Pkze9QQ0cYC181xwmrc-LQ/exec';
 
 
 function fetchScores() {
@@ -180,6 +180,97 @@ function showInstrumentDetail(item) {
     bottomNav.classList.add("hidden");
     topBar.classList.add("hidden");
 }
+
+function fetchRepairList() {
+  const params = new URLSearchParams();
+  params.append("mode", "getRepairList");
+
+  fetch(GAS_URL, {
+    method: "POST",
+    body: params
+  })
+    .then(res => res.json())
+    .then(data => {
+      const formatted = data.repairs.map(row => {
+        // 楽器番号から楽器名を取得
+        const inst = allInstrumentData.find(i => i.instrumentNo === row["楽器番号"]) || {};
+        return {
+          repairId: row["修理・点検ID"] || "",
+          instrumentNo: row["楽器番号"] || "",
+          instrumentName: inst.instrumentName || "",
+          repairDate: row["修理日"] || "",
+          qr: row["QR"] || "",
+          status: row["ステータス"] || "",
+          instrumentCode: row["楽器コード"] || "",
+          inspectionItems: row["点検・修理項目"] || "",
+          repairContent: row["修理内容"] || "",
+          repairPhoto: row["修理写真"] || "",
+          completionDate: row["完了提示日"] || ""
+        };
+      });
+
+      console.log("修理リスト取得:", formatted);
+      allRepairData = formatted; // 検索や詳細表示で使用
+      renderRepairList(formatted);
+    })
+    .catch(err => {
+      console.error("修理リスト取得エラー:", err);
+    });
+}
+
+function renderRepairList(data) {
+  const list = document.getElementById("repairList");
+  list.innerHTML = "";
+
+  data.forEach(item => {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <div class="instrument-left">
+        <img src="${getInstrumentImage(item.instrumentNo)}" alt="画像">
+        <div class="instrument-infoA">
+          <span>${item.instrumentName}</span>
+          <div class="instrument-infoB">
+            <span>${item.status}</span>
+          </div>
+        </div>
+      </div>
+      <span>${item.repairDate}</span>
+    `;
+    li.addEventListener("click", () => showRepairDetail(item));
+    list.appendChild(li);
+  });
+}
+
+
+function getInstrumentImage(instrumentNo) {
+  const inst = allInstrumentData.find(i => i.instrumentNo === instrumentNo);
+  return inst ? inst.image : "";
+}
+
+
+function showRepairDetail(item) {
+  const detailContent = document.getElementById("repairDetailContent");
+
+  detailContent.innerHTML = `
+    <div class="instrument-detail">
+      <img src="${item.repairPhoto || getInstrumentImage(item.instrumentNo)}" alt="修理写真">
+    </div>
+    <h2>${item.instrumentName}</h2>
+    ${generateDetailBlock("修理・点検ID", item.repairId)}
+    ${generateDetailBlock("楽器番号", item.instrumentNo)}
+    ${generateDetailBlock("楽器コード", item.instrumentCode)}
+    ${generateDetailBlock("QRコード", item.qr)}
+    ${generateDetailBlock("修理日", item.repairDate)}
+    ${generateDetailBlock("ステータス", item.status)}
+    ${generateDetailBlock("点検・修理項目", item.inspectionItems)}
+    ${generateDetailBlock("修理内容", item.repairContent)}
+    ${generateDetailBlock("完了提示日", item.completionDate)}
+  `;
+
+  document.getElementById("repairDetailModal").style.display = "block";
+}
+
+
 
 // 共通イベント
 closeBtn.addEventListener("click", () => {
@@ -500,3 +591,4 @@ document.getElementById("closeCamera").addEventListener("click", () => {
   document.getElementById("cameraContainer").style.display = "none";
   if (stream) stream.getTracks().forEach(track => track.stop());
 });
+

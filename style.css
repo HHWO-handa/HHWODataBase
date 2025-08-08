@@ -229,36 +229,23 @@ li {
 #addInstrumentModal { position: fixed; top:5%; left:10%; width:80%; max-height:90vh; overflow:auto; background:white; padding:20px; border:1px solid #ccc; z-index:1000; }
 #addInstrumentModal img { display:block; margin-top:10px; }
 
-.list-container {
-  padding: 10px;
-}
 
-.repair-item {
+
+/* 8月9日新規追加*/
+.detail-content {
   display: flex;
-  justify-content: space-between;
-  padding: 8px;
-  border-bottom: 1px solid #ccc;
-  cursor: pointer;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.instrument-name {
-  font-weight: bold;
-  color: #333;
+.detail-row {
+  border-bottom: 1px solid #ddd;
+  padding: 5px 0;
 }
 
-.status {
-  color: #666;
+.detail-photo {
+  margin-top: 15px;
+  text-align: center;
 }
-
-.repair-date {
-  font-size: 0.9em;
-  color: #999;
-}
-
-.modal-content {
-  max-height: 80vh;
-  overflow-y: auto;
-}
-
 
 

@@ -22,7 +22,7 @@ let allData = [];
 let allInstrumentData = [];
 let allRepairData = [];
 
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbwpcW7Ce_0ALk79xf77o1YVZVS5GWEs0lkP2ZqSDp7yHho4x1nLenTY4hac-C3FrWQ/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycby4yPrp7fAWuiKXR_ImlAQBo3bk2hXMXR4Zb0gZ_etNF6tV3eDGBnfdC_2PgEtHKac/exec';
 
 
 function fetchScores() {
@@ -118,7 +118,7 @@ function fetchInstruments() {
   })
     .then(res => res.json())
     .then(data => {
-      const formatted = data.scores.map(row => ({
+      const formatted = data.instruments.map(row => ({
         instrumentNo: row["instNumber"] || "",
         qr: row["QR"] || "",
         instrumentCode: row["instCode"] || "",
@@ -594,6 +594,7 @@ document.getElementById("closeCamera").addEventListener("click", () => {
   document.getElementById("cameraContainer").style.display = "none";
   if (stream) stream.getTracks().forEach(track => track.stop());
 });
+
 
 
 

@@ -104,6 +104,7 @@ window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("scoreList").classList.remove("hidden");
   fetchScores();
   fetchInstruments();
+  fetchRepairList();
 });
 
 
@@ -596,6 +597,7 @@ document.getElementById("closeCamera").addEventListener("click", () => {
   document.getElementById("cameraContainer").style.display = "none";
   if (stream) stream.getTracks().forEach(track => track.stop());
 });
+
 
 
 

@@ -18,7 +18,7 @@ const bottomNav = document.getElementById("bottomNav");
 let allData = [];
 let allInstrumentData = [];
 
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbx6iyCPA3rbl0UyiLgrKAkjow5vVzendtcuQ_E6TgP46Pkze9QQ0cYC181xwmrc-LQ/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyeck-PKgZX4bNpU9sfxiHozkShZQBfezA8tO9y6LC2ZTyDXij8_Jb9xAEUGAzOfBc/exec';
 
 
 function fetchScores() {
@@ -193,19 +193,19 @@ function fetchRepairList() {
     .then(data => {
       const formatted = data.repairs.map(row => {
         // 楽器番号から楽器名を取得
-        const inst = allInstrumentData.find(i => i.instrumentNo === row["楽器番号"]) || {};
+        const inst = allInstrumentData.find(i => i.instrumentNo === row["instrumentNo"]) || {};
         return {
-          repairId: row["修理・点検ID"] || "",
-          instrumentNo: row["楽器番号"] || "",
+          repairId: row["repairId"] || "",
+          instrumentNo: row["instrumentNo"] || "",
           instrumentName: inst.instrumentName || "",
-          repairDate: row["修理日"] || "",
+          repairDate: row["repairDate"] || "",
           qr: row["QR"] || "",
-          status: row["ステータス"] || "",
-          instrumentCode: row["楽器コード"] || "",
-          inspectionItems: row["点検・修理項目"] || "",
-          repairContent: row["修理内容"] || "",
-          repairPhoto: row["修理写真"] || "",
-          completionDate: row["完了提示日"] || ""
+          status: row["status"] || "",
+          instrumentCode: row["instrumentCode"] || "",
+          inspectionItems: row["inspectionItems"] || "",
+          repairContent: row["repairContent"] || "",
+          repairPhoto: row["repairPhoto"] || "",
+          completionDate: row["completionDate"] || ""
         };
       });
 
@@ -237,7 +237,7 @@ function renderRepairList(data) {
       <span>${item.repairDate}</span>
     `;
     li.addEventListener("click", () => showRepairDetail(item));
-    list.appendChild(li);
+    Repairlist.appendChild(li);
   });
 }
 
@@ -284,7 +284,7 @@ btnScore.addEventListener("click", () => {
   pageTitle.textContent = "楽譜データベース";
   scoreList.classList.remove("hidden");
   instrumentList.classList.add("hidden");
-  placeholder.classList.add("hidden");
+  Repairlist.classList.add("hidden");
 
   document.getElementById("searchInstrumentArea").classList.add("hidden");
 });
@@ -293,7 +293,7 @@ btnInstrument.addEventListener("click", () => {
   pageTitle.textContent = "楽器一覧";
   scoreList.classList.add("hidden");
   instrumentList.classList.remove("hidden");
-  placeholder.classList.add("hidden");
+  Repairlist.classList.add("hidden");
 
   renderInstrumentList(allInstrumentData);
 });
@@ -302,8 +302,7 @@ btnRepair.addEventListener("click", () => {
   pageTitle.textContent = "修理記録";
   scoreList.classList.add("hidden");
   instrumentList.classList.add("hidden");
-  placeholder.textContent = "表示問題なし";
-  placeholder.classList.remove("hidden");
+  Repairlist.classList.remove("hidden");
 });
 
 // 楽譜データベース検索・フィルター
@@ -591,4 +590,5 @@ document.getElementById("closeCamera").addEventListener("click", () => {
   document.getElementById("cameraContainer").style.display = "none";
   if (stream) stream.getTracks().forEach(track => track.stop());
 });
+
 

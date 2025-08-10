@@ -22,7 +22,7 @@ let allData = [];
 let allInstrumentData = [];
 let allRepairData = [];
 
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbyeck-PKgZX4bNpU9sfxiHozkShZQBfezA8tO9y6LC2ZTyDXij8_Jb9xAEUGAzOfBc/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbwpcW7Ce_0ALk79xf77o1YVZVS5GWEs0lkP2ZqSDp7yHho4x1nLenTY4hac-C3FrWQ/exec';
 
 
 function fetchScores() {
@@ -594,6 +594,7 @@ document.getElementById("closeCamera").addEventListener("click", () => {
   document.getElementById("cameraContainer").style.display = "none";
   if (stream) stream.getTracks().forEach(track => track.stop());
 });
+
 
 
 

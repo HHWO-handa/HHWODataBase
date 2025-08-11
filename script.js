@@ -250,8 +250,6 @@ function getInstrumentImage(instrumentNo) {
 
 
 function showRepairDetail(item) {
-  const detailContent = document.getElementById("repairDetailContent");
-
   detailContent.innerHTML = `
     <div class="instrument-detail">
       <img src="${item.repairPhoto || getInstrumentImage(item.instrumentNo)}" alt="修理写真">
@@ -267,8 +265,10 @@ function showRepairDetail(item) {
     ${generateDetailBlock("修理内容", item.repairContent)}
     ${generateDetailBlock("完了提示日", item.completionDate)}
   `;
+  modal.classList.remove("hidden");
+  bottomNav.classList.add("hidden");
+  topBar.classList.add("hidden");
 
-  document.getElementById("repairDetailModal").style.display = "block";
 }
 
 
@@ -601,6 +601,7 @@ document.getElementById("closeCamera").addEventListener("click", () => {
   document.getElementById("cameraContainer").style.display = "none";
   if (stream) stream.getTracks().forEach(track => track.stop());
 });
+
 
 
 

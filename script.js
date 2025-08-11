@@ -196,13 +196,10 @@ function fetchRepairList() {
   })
     .then(res => res.json())
     .then(data => {
-      const formatted = data.repairs.map(row => {
-        // 楽器番号から楽器名を取得
-        const inst = allInstrumentData.find(i => i.instrumentNo === row["instrumentNo"]) || {};
-        return {
+      const formatted = data.repairs.map(row => ({
           repairId: row["repairId"] || "",
           instrumentNo: row["instrumentNo"] || "",
-          instrumentName: inst.instrumentName || "",
+//          instrumentName: inst.instrumentName || "",
           repairDate: row["repairDate"] || "",
           qr: row["QR"] || "",
           status: row["status"] || "",
@@ -211,8 +208,7 @@ function fetchRepairList() {
           repairContent: row["repairContent"] || "",
           repairPhoto: row["repairPhoto"] || "",
           completionDate: row["completionDate"] || ""
-        };
-      });
+      }));
 
       console.log("修理リスト取得:", data);
       allRepairData = formatted; // 検索や詳細表示で使用
@@ -605,6 +601,7 @@ document.getElementById("closeCamera").addEventListener("click", () => {
   document.getElementById("cameraContainer").style.display = "none";
   if (stream) stream.getTracks().forEach(track => track.stop());
 });
+
 
 
 

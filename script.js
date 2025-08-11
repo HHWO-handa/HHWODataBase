@@ -253,7 +253,7 @@ function showRepairDetail(item) {
   detailContent.innerHTML = `
     <div class="instrument-detail">
       <img src="${item.repairPhoto || getInstrumentImage(item.instrumentNo)}" alt="画像">
-      <img src="${item.repairPhoto}" alt="修理写真">
+//      <img src="${item.repairPhoto}" alt="修理写真">
     </div>
     <h2>${item.instrumentName}</h2>
     ${generateDetailBlock("修理・点検ID", item.repairId)}
@@ -601,6 +601,7 @@ document.getElementById("closeCamera").addEventListener("click", () => {
   document.getElementById("cameraContainer").style.display = "none";
   if (stream) stream.getTracks().forEach(track => track.stop());
 });
+
 
 
 

@@ -252,13 +252,13 @@ function getInstrumentImage(instrumentNo) {
 function showRepairDetail(item) {
   detailContent.innerHTML = `
     <div class="instrument-detail">
-      <img src="${item.repairPhoto || getInstrumentImage(item.instrumentNo)}" alt="修理写真">
+      <img src="${item.repairPhoto || getInstrumentImage(item.instrumentNo)}" alt="画像">
+      <img src="${item.repairPhoto}" alt="修理写真">
     </div>
     <h2>${item.instrumentName}</h2>
     ${generateDetailBlock("修理・点検ID", item.repairId)}
     ${generateDetailBlock("楽器番号", item.instrumentNo)}
     ${generateDetailBlock("楽器コード", item.instrumentCode)}
-    ${generateDetailBlock("QRコード", item.qr)}
     ${generateDetailBlock("修理日", item.repairDate)}
     ${generateDetailBlock("ステータス", item.status)}
     ${generateDetailBlock("点検・修理項目", item.inspectionItems)}
@@ -601,6 +601,7 @@ document.getElementById("closeCamera").addEventListener("click", () => {
   document.getElementById("cameraContainer").style.display = "none";
   if (stream) stream.getTracks().forEach(track => track.stop());
 });
+
 
 
 

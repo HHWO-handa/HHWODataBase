@@ -249,3 +249,19 @@ li {
 }
 
 
+/* 各種追加モーダル */
+.addModal {
+  display: none;
+  position: fixed;
+  top: 2%;
+  left: 10%;
+  width: 80%;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  z-index: 1000;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  border-radius: 8px;
+}

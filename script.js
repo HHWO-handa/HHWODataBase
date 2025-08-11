@@ -212,7 +212,7 @@ function fetchRepairList() {
 
       console.log("修理リスト取得:", data);
       allRepairData = formatted; // 検索や詳細表示で使用
-      renderRepairList(formatted);
+      renderList(formatted);
     })
     .catch(err => {
       console.error("修理リスト取得エラー:", err);
@@ -601,6 +601,7 @@ document.getElementById("closeCamera").addEventListener("click", () => {
   document.getElementById("cameraContainer").style.display = "none";
   if (stream) stream.getTracks().forEach(track => track.stop());
 });
+
 
 
 

@@ -238,7 +238,7 @@ function renderRepairList(data) {
       <span>${item.repairDate}</span>
     `;
     li.addEventListener("click", () => showRepairDetail(item));
-    repairlist.appendChild(li);
+    repairList.appendChild(li);
   });
 }
 
@@ -601,6 +601,7 @@ document.getElementById("closeCamera").addEventListener("click", () => {
   document.getElementById("cameraContainer").style.display = "none";
   if (stream) stream.getTracks().forEach(track => track.stop());
 });
+
 
 
 

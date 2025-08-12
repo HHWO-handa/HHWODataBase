@@ -22,7 +22,7 @@ let allData = [];
 let allInstrumentData = [];
 let allRepairData = [];
 
-const GAS_URL = 'https://script.google.com/macros/s/AKfycby4yPrp7fAWuiKXR_ImlAQBo3bk2hXMXR4Zb0gZ_etNF6tV3eDGBnfdC_2PgEtHKac/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycby10taDHD9U6QqXtKNmq4RY6L2y6mShw0jzBJnH5m2MpcosGYqVTy9GW7B5i69CymI/exec';
 
 
 function fetchScores() {
@@ -278,34 +278,6 @@ closeBtn.addEventListener("click", () => {
     bottomNav.classList.remove("hidden");
     topBar.classList.remove("hidden");
 });
-
-
-//btnScore.addEventListener("click", () => {
-//  pageTitle.textContent = "楽譜データベース";
-//  scoreList.classList.remove("hidden");
-//  instrumentList.classList.add("hidden");
-//  Repairlist.classList.add("hidden");
-//
-//  document.getElementById("searchInstrumentArea").classList.add("hidden");
-//});
-
-//btnInstrument.addEventListener("click", () => {
-//  pageTitle.textContent = "楽器一覧";
-//  scoreList.classList.add("hidden");
-//  instrumentList.classList.remove("hidden");
-//  Repairlist.classList.add("hidden");
-//
-//  renderInstrumentList(allInstrumentData);
-//});
-
-//btnRepair.addEventListener("click", () => {
-//  pageTitle.textContent = "修理記録";
-//  scoreList.classList.add("hidden");
-//  instrumentList.classList.add("hidden");
-//  Repairlist.classList.remove("hidden");
-////いれてみた。
-//  renderRepairList(allRepairData);
-//});
 
 // 楽譜データベース検索・フィルター
 document.getElementById("searchInput").addEventListener("input", (e) => {
@@ -565,6 +537,53 @@ document.getElementById("instrumentForm").addEventListener("submit", (e) => {
     .catch(e=>alert(e));
 });
 
+//以下、修理学期追加機能
+//以下、修理楽器追加機能
+
+function openAddRepairModal() {
+  document.getElementById("addRepairModal").style.display = "block";
+}
+
+function closeAddRepairModal() {
+  document.getElementById("addRepairModal").style.display = "none";
+}
+
+document.getElementById("repairForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const form = e.target;
+
+  if (!form.checkValidity()) {
+    alert("入力内容を確認してください");
+    return;
+  }
+
+  const formData = new FormData(form);
+  const params = new URLSearchParams();
+  params.append("mode", "addRepair");
+  for (const [key, val] of formData.entries()) {
+    params.append(key, val);
+  }
+
+  fetch(GAS_URL, {
+    method: "POST",
+    body: params
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === "repair added") {
+        alert("登録完了しました");
+        closeAddRepairModal();
+        form.reset();
+        fetchRepairList();
+      } else {
+        alert("登録に失敗しました");
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert("通信エラー");
+    });
+});
 
 
 const video = document.getElementById("video");
@@ -600,6 +619,7 @@ document.getElementById("closeCamera").addEventListener("click", () => {
   document.getElementById("cameraContainer").style.display = "none";
   if (stream) stream.getTracks().forEach(track => track.stop());
 });
+
 
 
 

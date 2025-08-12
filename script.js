@@ -642,3 +642,4 @@ document.getElementById("closeCamera").addEventListener("click", () => {
 
 
 
+

@@ -157,11 +157,25 @@
 </div>
 
 <!-- 楽器追加モーダル -->
-<div id="addInstrumentModal" style="display:none;">
+<div id="addInstrumentModal" style="
+  display: none;
+  position: fixed;
+  top: 2%;
+  left: 10%;
+  width: 80%;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  z-index: 1000;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  border-radius: 8px;
+">
   <form id="instrumentForm">
     <h3>楽器追加</h3>
-
     <!-- 楽器番号（3分割） -->
+      <div>
     <label>分類 *</label>
     <select id="part1" required>
       <option value="">選択してください</option>
@@ -175,48 +189,60 @@
       <option value="8">8&nbsp;パーカッション</option>
       <option value="9">9&nbsp;その他（予備）</option>
     </select>
-
+      </div>
+      <div>
     <label>中間番号 *</label>
    <input type="text" id="part2" name="part2" maxlength="2" pattern="\d{2}" required placeholder="2桁 (例: 01)">
-
+      </div>
+      <div>
     <label>下3桁番号 *</label>
       <input type="text" id="part3" name="part3" maxlength="3" pattern="\d{3}" required placeholder="3桁 (例: 001)">
-
+       </div>
+      <div>
     <!-- 結合用QRコード: hidden -->
     <input type="hidden" id="instrQRCode" name="qr">
-
+      </div>
+      <div>
     <label>楽器コード *</label>
     <input type="text" id="instrCode" name="instrumentCode" required />
-
+      </div>
+      <div>
     <label>楽器名 *</label>
     <input type="text" id="instrName" name="instrumentName" required />
-
+      </div>
+      <div>
     <label>管理開始日 *</label>
     <input type="date" id="startDate" name="startDate" required />
-
+       </div>
+      <div>
     <label>メーカー</label>
     <input type="text" id="manufacturer" name="manufacturer" />
-
+          </div>
+      <div>
     <label>製品名</label>
     <input type="text" id="productName" name="productName" />
-
+          </div>
+      <div>
     <label>所有元 *</label>
     <select id="owner" name="owner" required>
       <option value="">選択してください</option>
       <option>学校備品</option><option>ばらさのグッズ</option>
       <option>寄付・寄贈</option><option>その他</option>
     </select>
-
+          </div>
+       <div>
     <label>楽器状態</label>
     <input type="text" id="status" name="status" />
-
+       </div>
+      <div>
     <label>備品番号</label>
     <input type="text" id="equipmentNo" name="equipmentNo" />
-
+      </div>
+      <div>
     <label>画像</label>
     <button type="button" id="btnCaptureImage">写真を撮る</button>
     <img id="previewImg" style="max-width:100%; display:none;" />
-
+       </div>
     <br><button type="submit">登録</button>
     <button type="button" onclick="closeAddInstrumentModal()">閉じる</button>
   </form>
@@ -280,6 +306,10 @@
       <label>修理内容 *</label><br>
       <input type="text" name="repairContent" required>
     </div>
+          <div>
+      <label>完了日 *</label><br>
+      <input type="date"  name="completionDate" required />
+    </div>
     <div>
     <br>
     <button type="submit">登録</button>
@@ -309,6 +339,7 @@
     </script>
 </body>
 </html>
+
 
 
 

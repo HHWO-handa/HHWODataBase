@@ -229,7 +229,7 @@ function renderRepairList(data) {
       <div class="instrument-left">
         <img src="${getInstrumentImage(item.instrumentNo)}" alt="画像">
         <div class="instrument-infoA">
-          <span>${getInstrumentName(item.instrumentNo)}</span>   //元はitem.instrumentName
+          <span>${getInstrumentName(item.instrumentNo)}</span>  
           <div class="instrument-infoB">
             <span>${item.status}</span>
           </div>
@@ -632,13 +632,14 @@ document.getElementById("closeCamera").addEventListener("click", () => {
 // 画像撮影
 document.getElementById("btnCaptureImage").addEventListener("click", async () => {
   try {
-    stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    stream = await navigator.mediaDevices.getUserMedia({ video: {facingMode: 'environment'} });
     video.srcObject = stream;
     document.getElementById("cameraContainer").style.display = "block";
   } catch (err) {
     alert("カメラの起動に失敗しました: " + err.message);
   }
 });
+
 
 
 

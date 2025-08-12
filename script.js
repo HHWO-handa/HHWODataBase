@@ -229,7 +229,7 @@ function renderRepairList(data) {
       <div class="instrument-left">
         <img src="${getInstrumentImage(item.instrumentNo)}" alt="画像">
         <div class="instrument-infoA">
-          <span>${item.instrumentName}</span>
+          <span>${getInstrumentName(item.instrumentNo)}</span>   //元はitem.instrumentName
           <div class="instrument-infoB">
             <span>${item.status}</span>
           </div>
@@ -242,19 +242,24 @@ function renderRepairList(data) {
   });
 }
 
-
+//楽器修理項目における引用用
 function getInstrumentImage(instrumentNo) {
   const inst = allInstrumentData.find(i => i.instrumentNo === instrumentNo);
   return inst ? inst.image : "";
 }
 
+function getInstrumentName(instrumentNo) {
+  const inst = allInstrumentData.find(i => i.instrumentNo === instrumentNo);
+  return inst ? inst.instrumentName : "";
+}
+//楽器修理項目における引用用終わり
 
 function showRepairDetail(item) {
   detailContent.innerHTML = `
     <div class="instrument-detail">
     <img src="${item.repairPhoto || getInstrumentImage(item.instrumentNo)}" alt="修理写真or基本画像">
     </div>
-    <h2>${item.instrumentName}</h2>
+    <h2>${getInstrumentName(item.instrumentNo)}</h2>
     ${generateDetailBlock("修理・点検ID", item.repairId)}
     ${generateDetailBlock("楽器番号", item.instrumentNo)}
     ${generateDetailBlock("楽器コード", item.instrumentCode)}
@@ -634,6 +639,7 @@ document.getElementById("btnCaptureImage").addEventListener("click", async () =>
     alert("カメラの起動に失敗しました: " + err.message);
   }
 });
+
 
 
 

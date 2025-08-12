@@ -448,7 +448,7 @@ document.getElementById("scoreForm").addEventListener("submit", function (e) {
 //以下、楽器追加機能
 //以下、楽器追加機能
 function closeAddInstrumentModal() {
-  document.getElementById("addScoreModal").style.display = "none";
+  document.getElementById("addInstrumentModal").style.display = "none";
 }
 
 // 自動入力ロジック
@@ -619,6 +619,7 @@ document.getElementById("closeCamera").addEventListener("click", () => {
   document.getElementById("cameraContainer").style.display = "none";
   if (stream) stream.getTracks().forEach(track => track.stop());
 });
+
 
 
 

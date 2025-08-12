@@ -243,6 +243,13 @@
     <button type="button" id="btnCaptureImage">写真を撮る</button>
     <img id="previewImg" style="max-width:100%; display:none;" />
        </div>
+<!-- カメラ表示・撮影8/12追加　-->
+<div id="cameraContainer" style="display:none;">
+  <video id="video" autoplay playsinline style="width:100%; max-height:300px;"></video>
+  <button id="takePhotoBtn">📸 撮影</button>
+  <button id="closeCamera">カメラを閉じる</button>
+  <canvas id="canvas" style="display:none;"></canvas>
+</div>
     <br><button type="submit">登録</button>
     <button type="button" onclick="closeAddInstrumentModal()">閉じる</button>
   </form>
@@ -344,6 +351,7 @@
     </script>
 </body>
 </html>
+
 
 
 

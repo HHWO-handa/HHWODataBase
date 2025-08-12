@@ -506,15 +506,15 @@ document.getElementById("part1").addEventListener("change", () => {
 
 
 // 画像撮影
-document.getElementById("btnCaptureImage").addEventListener("click", async () => {
-  try {
-    stream = await navigator.mediaDevices.getUserMedia({ video: true });
-    video.srcObject = stream;
-    document.getElementById("cameraContainer").style.display = "block";
-  } catch (err) {
-    alert("カメラの起動に失敗しました: " + err.message);
-  }
-});
+//document.getElementById("btnCaptureImage").addEventListener("click", async () => {
+//  try {
+//    stream = await navigator.mediaDevices.getUserMedia({ video: true });
+//    video.srcObject = stream;
+//    document.getElementById("cameraContainer").style.display = "block";
+//  } catch (err) {
+//    alert("カメラの起動に失敗しました: " + err.message);
+//  }
+//});
 
 
 // フォーム送信
@@ -624,6 +624,16 @@ document.getElementById("closeCamera").addEventListener("click", () => {
 });
 
 
+// 画像撮影
+document.getElementById("btnCaptureImage").addEventListener("click", async () => {
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    video.srcObject = stream;
+    document.getElementById("cameraContainer").style.display = "block";
+  } catch (err) {
+    alert("カメラの起動に失敗しました: " + err.message);
+  }
+});
 
 
 

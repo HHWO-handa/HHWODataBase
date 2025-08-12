@@ -542,6 +542,9 @@ document.getElementById("instrumentForm").addEventListener("submit", (e) => {
 
 function openAddRepairModal() {
   document.getElementById("addRepairModal").style.display = "block";
+
+    const today = new Date().toISOString().slice(0,10);
+  document.getElementById("startDate").value = today;
 }
 
 function closeAddRepairModal() {
@@ -619,6 +622,7 @@ document.getElementById("closeCamera").addEventListener("click", () => {
   document.getElementById("cameraContainer").style.display = "none";
   if (stream) stream.getTracks().forEach(track => track.stop());
 });
+
 
 
 

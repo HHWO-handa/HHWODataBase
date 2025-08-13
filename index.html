@@ -240,7 +240,7 @@
     <img id="previewImg" style="max-width:100%; display:none;" />
        </div>
 <!-- カメラ表示・撮影8/12追加onclick="cameraContainer()"　-->
-<div id="cameraContainer" style="display:none;">
+<div onclick="cameraContainer()" style="display:none;">
   <video id="video" autoplay playsinline style="width:100%; max-height:300px;"></video>
   <button onclick="takePhotoBtn()">📸 撮影</button>
   <button onclick="closeCamera()">カメラを閉じる</button>
@@ -313,8 +313,8 @@
     <button type="button" onclick="openCamera()">写真を撮る</button>
     <img id="previewImg" style="max-width:100%; display:none;" />
        </div>
-<!-- カメラ表示・撮影8/12追加onclick="cameraContainer()"　-->
-<div id="cameraContainer" style="display:none;">
+<!-- カメラ表示・撮影8/12追加onclick="cameraContainer()"  id="cameraContainer"　-->
+<div onclick="cameraContainer()" style="display:none;">
   <video id="video" autoplay playsinline style="width:100%; max-height:300px;"></video>
   <button onclick="takePhotoBtn()">📸 撮影</button>
   <button onclick="closeCamera()">カメラを閉じる</button>
@@ -336,13 +336,7 @@
 </div>
     
 
-<!-- カメラ表示・撮影 -->
-<div id="cameraContainer" style="display:none;">
-  <video id="video" autoplay playsinline style="width:100%; max-height:300px;"></video>
-  <button id="takePhotoBtn">📸 撮影</button>
-  <button id="closeCamera">カメラを閉じる</button>
-  <canvas id="canvas" style="display:none;"></canvas>
-</div>
+
 
 
     <script src="script.js"></script>
@@ -357,6 +351,7 @@
     </script>
 </body>
 </html>
+
 
 
 

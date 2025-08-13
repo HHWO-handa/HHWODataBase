@@ -641,10 +641,8 @@ document.getElementById("closeCamera").addEventListener("click", () => {
 });
 
 
-const modalButtonIds = ['btnCaptureImage', 'btnCaptureImage2'];
-modalButtonIds.forEach(id => {
-  const btn = document.getElementById(id);
-  btn.addEventListener('click', () => {
+
+function opencamera() {
 try {
     stream = await navigator.mediaDevices.getUserMedia({ video: {facingMode: 'environment'} });
     video.srcObject = stream;
@@ -652,8 +650,8 @@ try {
   } catch (err) {
     alert("カメラの起動に失敗しました: " + err.message);
   }
-});
-});
+}
+
 
 
 
@@ -678,6 +676,7 @@ try {
 //    alert("カメラの起動に失敗しました: " + err.message);
 //  }
 //});
+
 
 
 

@@ -641,27 +641,44 @@ document.getElementById("closeCamera").addEventListener("click", () => {
 });
 
 
-// 画像撮影
-document.getElementById("btnCaptureImage").addEventListener("click", async () => {
-  try {
+const modalButtonIds = ['btnCaptureImage', 'btnCaptureImage2'];
+modalButtonIds.forEach(id => {
+  const btn = document.getElementById(id);
+  btn.addEventListener('click', () => {
+try {
     stream = await navigator.mediaDevices.getUserMedia({ video: {facingMode: 'environment'} });
     video.srcObject = stream;
     document.getElementById("cameraContainer").style.display = "block";
   } catch (err) {
     alert("カメラの起動に失敗しました: " + err.message);
   }
+});
 });
 
+
+
+// 画像撮影
+//document.getElementById("btnCaptureImage").addEventListener("click", async () => {
+//  try {
+//    stream = await navigator.mediaDevices.getUserMedia({ video: {facingMode: 'environment'} });
+//    video.srcObject = stream;
+//    document.getElementById("cameraContainer").style.display = "block";
+//  } catch (err) {
+//    alert("カメラの起動に失敗しました: " + err.message);
+//  }
+//});
+
 // 画像撮影8/13追加必要あるかな？？？
-document.getElementById("btnCaptureImage2").addEventListener("click", async () => {
-  try {
-    stream = await navigator.mediaDevices.getUserMedia({ video: {facingMode: 'environment'} });
-    video.srcObject = stream;
-    document.getElementById("cameraContainer").style.display = "block";
-  } catch (err) {
-    alert("カメラの起動に失敗しました: " + err.message);
-  }
-});
+//document.getElementById("btnCaptureImage2").addEventListener("click", async () => {
+//  try {
+//    stream = await navigator.mediaDevices.getUserMedia({ video: {facingMode: 'environment'} });
+//    video.srcObject = stream;
+//    document.getElementById("cameraContainer").style.display = "block";
+//  } catch (err) {
+//    alert("カメラの起動に失敗しました: " + err.message);
+//  }
+//});
+
 
 
 

@@ -605,56 +605,115 @@ document.getElementById("repairForm").addEventListener("submit", function (e) {
     });
 });
 
-
-const video = document.getElementById("video");
-const canvas = document.getElementById("canvas");
-const context = canvas.getContext("2d");
-const previewImg = document.getElementById("previewImg");
+const videos = document.querySelectorAll('video');
+const canvases = document.querySelectorAll('canvas');
+const previewImgs = document.querySelectorAll('img[id^="previewImg"]');
 let stream;
 
-// 撮影ボタン押下 → カメラ起動
-
-// 写真を撮る
-function takePhotoBtn() {
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
-  context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-
-  // DataURL 形式で画像データ取得
-  const imageData = canvas.toDataURL("image/png");
-
-  // プレビューに表示
-  previewImg.src = imageData;
-  previewImg.style.display = "block";
-
-  // モーダル内を閉じる
-  document.querySelectorAll('#cameraContainer1, #cameraContainer2')
-    .forEach(el => el.style.display = "none");
-
-  // カメラ停止
-  stream.getTracks().forEach(track => track.stop());
-}
-
-// カメラを閉じる
-function closeCamera() {
-  document.querySelectorAll('#cameraContainer1, #cameraContainer2')
-    .forEach(el => el.style.display = "none");
-  if (stream) stream.getTracks().forEach(track => track.stop());
-}
-
-
-
-async function openCamera() {
-try {
-    stream = await navigator.mediaDevices.getUserMedia({ video: {facingMode: 'environment'} });
+// カメラ起動
+async function openCameraFromButton(button) {
+  const container = button.closest('div').nextElementSibling; // 次のカメラコンテナ
+  const video = container.querySelector('video');
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
     video.srcObject = stream;
-    document.querySelectorAll('#cameraContainer1, #cameraContainer2')
-      .forEach(el => el.style.display = "block");
+    container.style.display = "block";
   } catch (err) {
     alert("カメラの起動に失敗しました: " + err.message);
   }
 }
+
+// 撮影
+function takePhotoFromButton(button) {
+  const container = button.closest('div');
+  const video = container.querySelector('video');
+  const canvas = container.querySelector('canvas');
+  const previewImg = container.previousElementSibling.querySelector('img');
+
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  const context = canvas.getContext("2d");
+  context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+  previewImg.src = canvas.toDataURL("image/png");
+  previewImg.style.display = "block";
+
+  container.style.display = "none";
+  if (stream) stream.getTracks().forEach(track => track.stop());
+}
+
+// カメラ閉じる
+function closeCameraFromButton(button) {
+  const container = button.closest('div');
+  container.style.display = "none";
+  if (stream) stream.getTracks().forEach(track => track.stop());
+}
+
+// イベント登録
+document.querySelectorAll('.open-camera-btn').forEach(btn => {
+  btn.addEventListener('click', () => openCameraFromButton(btn));
+});
+document.querySelectorAll('.take-photo-btn').forEach(btn => {
+  btn.addEventListener('click', () => takePhotoFromButton(btn));
+});
+document.querySelectorAll('.close-camera-btn').forEach(btn => {
+  btn.addEventListener('click', () => closeCameraFromButton(btn));
+});
+
+
+
+
+
+//const video = document.getElementById("video");
+//const canvas = document.getElementById("canvas");
+//const context = canvas.getContext("2d");
+//const previewImg = document.getElementById("previewImg");
+//let stream;
+
+// 撮影ボタン押下 → カメラ起動
+
+// 写真を撮る
+//function takePhotoBtn() {
+//  canvas.width = video.videoWidth;
+//  canvas.height = video.videoHeight;
+//  context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+
+  // DataURL 形式で画像データ取得
+//  const imageData = canvas.toDataURL("image/png");
+
+  // プレビューに表示
+//  previewImg.src = imageData;
+//  previewImg.style.display = "block";
+
+  // モーダル内を閉じる
+//  document.querySelectorAll('#cameraContainer1, #cameraContainer2')
+//    .forEach(el => el.style.display = "none");
+
+  // カメラ停止
+//  stream.getTracks().forEach(track => track.stop());
+//}
+
+// カメラを閉じる
+//function closeCamera() {
+//  document.querySelectorAll('#cameraContainer1, #cameraContainer2')
+//    .forEach(el => el.style.display = "none");
+//  if (stream) stream.getTracks().forEach(track => track.stop());
+//}
+
+
+
+//async function openCamera() {
+//try {
+//    stream = await navigator.mediaDevices.getUserMedia({ video: {facingMode: 'environment'} });
+//    video.srcObject = stream;
+//    document.querySelectorAll('#cameraContainer1, #cameraContainer2')
+//      .forEach(el => el.style.display = "block");
+//  } catch (err) {
+//    alert("カメラの起動に失敗しました: " + err.message);
+//  }
+//}
+
 
 
 

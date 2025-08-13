@@ -234,17 +234,16 @@
     <label>備品番号</label>
     <input type="text" id="equipmentNo" name="equipmentNo" />
       </div>
-      <div>
-    <label>画像</label>
-    <button type="button" onclick="openCamera()">写真を撮る</button>
-    <img id="previewImg" style="max-width:100%; display:none;" />
-       </div>
-<!-- カメラ表示・撮影8/12追加onclick="cameraContainer()"　-->
+<div>
+  <label>画像</label>
+  <button type="button" class="open-camera-btn">写真を撮る</button>
+  <img id="previewImg1" style="max-width:100%; display:none;" />
+</div>
 <div id="cameraContainer1" style="display:none;">
-  <video id="video" autoplay playsinline style="width:100%; max-height:300px;"></video>
-  <button onclick="takePhotoBtn()">📸 撮影</button>
-  <button onclick="closeCamera()">カメラを閉じる</button>
-  <canvas id="canvas" style="display:none;"></canvas>
+  <video id="video1" autoplay playsinline style="width:100%; max-height:300px;"></video>
+  <button class="take-photo-btn">📸 撮影</button>
+  <button class="close-camera-btn">カメラを閉じる</button>
+  <canvas id="canvas1" style="display:none;"></canvas>
 </div>
     <br><button type="submit">登録</button>
     <button type="button" onclick="closeAddInstrumentModal()">閉じる</button>
@@ -308,17 +307,16 @@
         <option>その他</option>
       </select>
     </div>
-      <div>
-    <label>画像</label>
-    <button type="button" onclick="openCamera()">写真を撮る</button>
-    <img id="previewImg" style="max-width:100%; display:none;" />
-       </div>
-<!-- カメラ表示・撮影8/12追加onclick="cameraContainer()"  id="cameraContainer"　-->
+<div>
+  <label>画像</label>
+  <button type="button" class="open-camera-btn">写真を撮る</button>
+  <img id="previewImg2" style="max-width:100%; display:none;" />
+</div>
 <div id="cameraContainer2" style="display:none;">
-  <video id="video" autoplay playsinline style="width:100%; max-height:300px;"></video>
-  <button onclick="takePhotoBtn()">📸 撮影</button>
-  <button onclick="closeCamera()">カメラを閉じる</button>
-  <canvas id="canvas" style="display:none;"></canvas>
+  <video id="video2" autoplay playsinline style="width:100%; max-height:300px;"></video>
+  <button class="take-photo-btn">📸 撮影</button>
+  <button class="close-camera-btn">カメラを閉じる</button>
+  <canvas id="canvas2" style="display:none;"></canvas>
 </div>
     <div>
       <label>修理内容 *</label><br>
@@ -351,6 +349,7 @@
     </script>
 </body>
 </html>
+
 
 
 

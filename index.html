@@ -22,11 +22,8 @@
     <div id="topBar">
   <div id="searchArea">
     <input type="text" id="searchInput" placeholder="検索">
-  <!-- 一旦いらない  <button id="filterBtn">絞り込み</button> -->
-      <button onclick="openAddScoreModal()">＋A</button>
-      <button onclick="openAddInstrumentModal()">＋B</button>
-      <button onclick="openAddRepairModal()">＋C</button>
-      <button onclick="openAddModal()">仮</button>
+      <button id="filterBtn">フィルター</button>
+      <button onclick="openAddModal()">＋</button>
 　　 <button id="qrInstrumentBtn">📷</button>
   </div>
 </div>
@@ -273,6 +270,10 @@
   <h3>楽器修理追加</h3>
   <form id="repairForm">
     <div>
+      <label>修理記録ID</label><br>
+    　<input type="text" id="repairID" name="repairID" required />
+    </div>
+    <div>
       <label>楽器番号 *</label><br>
     　<input type="text" name="instrumentNo" required>
     </div>
@@ -307,11 +308,18 @@
         <option>その他</option>
       </select>
     </div>
-     <div>
+      <div>
     <label>画像</label>
     <button type="button" id="btnCaptureImage">写真を撮る</button>
     <img id="previewImg" style="max-width:100%; display:none;" />
        </div>
+<!-- カメラ表示・撮影8/12追加　-->
+<div id="cameraContainer" style="display:none;">
+  <video id="video" autoplay playsinline style="width:100%; max-height:300px;"></video>
+  <button id="takePhotoBtn">📸 撮影</button>
+  <button id="closeCamera">カメラを閉じる</button>
+  <canvas id="canvas" style="display:none;"></canvas>
+</div>
     <div>
       <label>修理内容 *</label><br>
       <input type="text" name="repairContent" required>
@@ -349,6 +357,7 @@
     </script>
 </body>
 </html>
+
 
 
 

@@ -619,7 +619,7 @@ function takePhotoBtn() {
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
   context.drawImage(video, 0, 0, canvas.width, canvas.height);
-}
+
 
   // DataURL 形式で画像データ取得
   const imageData = canvas.toDataURL("image/png");
@@ -633,7 +633,7 @@ function takePhotoBtn() {
 
   // カメラ停止
   stream.getTracks().forEach(track => track.stop());
-});
+}
 
 // カメラを閉じる
 function closeCamera() {
@@ -652,6 +652,7 @@ try {
     alert("カメラの起動に失敗しました: " + err.message);
   }
 }
+
 
 
 

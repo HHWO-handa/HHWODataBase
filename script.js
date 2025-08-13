@@ -312,7 +312,7 @@ document.getElementById("searchInput").addEventListener("input", (e) => {
         String(val).toLowerCase().includes(keyword)
       )
     );
-    rendeRepairList(filtered);
+    renderRepairList(filtered);
   }
 });
 
@@ -651,6 +651,7 @@ document.getElementById("btnCaptureImage").addEventListener("click", async () =>
     alert("カメラの起動に失敗しました: " + err.message);
   }
 });
+
 
 
 

@@ -615,10 +615,11 @@ let stream;
 // 撮影ボタン押下 → カメラ起動
 
 // 写真を撮る
-document.getElementById("takePhotoBtn").addEventListener("click", () => {
+function takePhotoBtn() {
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
   context.drawImage(video, 0, 0, canvas.width, canvas.height);
+}
 
   // DataURL 形式で画像データ取得
   const imageData = canvas.toDataURL("image/png");
@@ -635,14 +636,14 @@ document.getElementById("takePhotoBtn").addEventListener("click", () => {
 });
 
 // カメラを閉じる
-document.getElementById("closeCamera").addEventListener("click", () => {
+function closeCamera() {
   document.getElementById("cameraContainer").style.display = "none";
   if (stream) stream.getTracks().forEach(track => track.stop());
-});
+}
 
 
 
-async function opencamera() {
+async function openCamera() {
 try {
     stream = await navigator.mediaDevices.getUserMedia({ video: {facingMode: 'environment'} });
     video.srcObject = stream;
@@ -651,46 +652,6 @@ try {
     alert("カメラの起動に失敗しました: " + err.message);
   }
 }
-
-
-
-
-// 画像撮影
-//document.getElementById("btnCaptureImage").addEventListener("click", async () => {
-//  try {
-//    stream = await navigator.mediaDevices.getUserMedia({ video: {facingMode: 'environment'} });
-//    video.srcObject = stream;
-//    document.getElementById("cameraContainer").style.display = "block";
-//  } catch (err) {
-//    alert("カメラの起動に失敗しました: " + err.message);
-//  }
-//});
-
-// 画像撮影8/13追加必要あるかな？？？
-//document.getElementById("btnCaptureImage2").addEventListener("click", async () => {
-//  try {
-//    stream = await navigator.mediaDevices.getUserMedia({ video: {facingMode: 'environment'} });
-//    video.srcObject = stream;
-//    document.getElementById("cameraContainer").style.display = "block";
-//  } catch (err) {
-//    alert("カメラの起動に失敗しました: " + err.message);
-//  }
-//});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

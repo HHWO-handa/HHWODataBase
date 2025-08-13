@@ -629,7 +629,8 @@ function takePhotoBtn() {
   previewImg.style.display = "block";
 
   // モーダル内を閉じる
-  document.querySelectorAll('#cameraContainer1, #cameraContainer2').style.display = "none";
+  document.querySelectorAll('#cameraContainer1, #cameraContainer2')
+    .forEach(el => el.style.display = "none");
 
   // カメラ停止
   stream.getTracks().forEach(track => track.stop());
@@ -637,7 +638,8 @@ function takePhotoBtn() {
 
 // カメラを閉じる
 function closeCamera() {
-  document.querySelectorAll('#cameraContainer1, #cameraContainer2').style.display = "none";
+  document.querySelectorAll('#cameraContainer1, #cameraContainer2')
+    .forEach(el => el.style.display = "none");
   if (stream) stream.getTracks().forEach(track => track.stop());
 }
 
@@ -647,20 +649,12 @@ async function openCamera() {
 try {
     stream = await navigator.mediaDevices.getUserMedia({ video: {facingMode: 'environment'} });
     video.srcObject = stream;
-    document.querySelectorAll('#cameraContainer1, #cameraContainer2').style.display = "block";
+    document.querySelectorAll('#cameraContainer1, #cameraContainer2')
+      .forEach(el => el.style.display = "block");
   } catch (err) {
     alert("カメラの起動に失敗しました: " + err.message);
   }
 }
-
-
-
-
-
-
-
-
-
 
 
 

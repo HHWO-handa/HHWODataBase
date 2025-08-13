@@ -561,7 +561,7 @@ function openAddRepairModal() {
   document.getElementById("addRepairModal").style.display = "block";
 
     const today = new Date().toISOString().slice(0,10);
-  document.getElementById("startDate").value = today;
+  document.getElementById("repairDate").value = today;
 }
 
 function closeAddRepairModal() {
@@ -643,6 +643,17 @@ document.getElementById("closeCamera").addEventListener("click", () => {
 
 // 画像撮影
 document.getElementById("btnCaptureImage").addEventListener("click", async () => {
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ video: {facingMode: 'environment'} });
+    video.srcObject = stream;
+    document.getElementById("cameraContainer").style.display = "block";
+  } catch (err) {
+    alert("カメラの起動に失敗しました: " + err.message);
+  }
+});
+
+// 画像撮影8/13追加必要あるかな？？？
+document.getElementById("btnCaptureImage2").addEventListener("click", async () => {
   try {
     stream = await navigator.mediaDevices.getUserMedia({ video: {facingMode: 'environment'} });
     video.srcObject = stream;

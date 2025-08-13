@@ -489,20 +489,6 @@ function openAddInstrumentModal() {
   const qr = document.getElementById("instrQRCode");
   const today = new Date().toISOString().slice(0,10);
   document.getElementById("startDate").value = today;
-
-  cls.addEventListener("change", () => {
-    const c = cls.value;
-    const filtered = allInstrumentData.filter(i => i.instrumentNo.startsWith(c));
-    const mids = filtered.map(i => parseInt(i.instrumentNo.slice(1,3),10)||0);
-    const largestMid = mids.length?Math.max(...mids):0;
-    mid.value = String(largestMid+1).padStart(2,'0');
-
-    const ends = filtered.map(i => parseInt(i.instrumentNo.slice(-3),10)||0);
-    const largestEnd = ends.length?Math.max(...ends):0;
-    end.value = String(largestEnd+1).padStart(3,'0');
-
-    qr.value = c + mid.value + end.value + document.getElementById("instrCode").value;
-  });
 }
 
 //新規システムじどうにゅうりょく
@@ -541,7 +527,7 @@ document.getElementById("instrumentForm").addEventListener("submit", (e) => {
   if (!f.checkValidity()) {alert("必須項目を入力してください");return;}
   const fd = new FormData(f);
   fd.append("mode","addInstrument");
-  fd.append("imageData", previewImg.src);
+  fd.append("imageData", previewImg1.src);
 
   fetch(GAS_URL, { method:"POST", body:fd })
     .then(r=>r.json()).then(js=>{
@@ -713,6 +699,7 @@ document.querySelectorAll('.close-camera-btn').forEach(btn => {
 //    alert("カメラの起動に失敗しました: " + err.message);
 //  }
 //}
+
 
 
 

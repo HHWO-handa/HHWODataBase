@@ -642,7 +642,7 @@ document.getElementById("closeCamera").addEventListener("click", () => {
 
 
 
-function opencamera() {
+async function opencamera() {
 try {
     stream = await navigator.mediaDevices.getUserMedia({ video: {facingMode: 'environment'} });
     video.srcObject = stream;
@@ -676,6 +676,7 @@ try {
 //    alert("カメラの起動に失敗しました: " + err.message);
 //  }
 //});
+
 
 
 

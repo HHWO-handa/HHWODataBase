@@ -37,6 +37,43 @@
 
 <div id="mainContent">
   <h1 id="pageTitle">楽譜データベース</h1>
+    <table id="data-table">
+  <thead>
+    <tr>
+      <th>名前</th>
+      <th>メール</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+<script>
+async function fetchData() {
+  const { data, error } = await supabase
+    .from('test') // テーブル名
+    .select('*');     // 取得するカラム
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  const tbody = document.querySelector("#data-table tbody");
+  tbody.innerHTML = "";
+
+  data.forEach(row => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${row.name}</td>
+      <td>${row.email}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+fetchData();
+</script>
   <ul id="scoreList"></ul>
   <div id="placeholderMessage" class="hidden">表示問題なし</div>
   <ul id="instrumentList" class="hidden"></ul>
@@ -350,6 +387,7 @@
     </script>
 </body>
 </html>
+
 
 
 

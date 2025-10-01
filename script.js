@@ -1,5 +1,11 @@
 
 // 共通要素取得
+//supabaseとの接続
+const supabaseUrl = "https://eluvfvzfstnafvhfmwhx.supabase.co"; // https://xxxx.supabase.co
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVsdXZmdnpmc3RuYWZ2aGZtd2h4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkyMDM5MTYsImV4cCI6MjA3NDc3OTkxNn0.N5Pt-Yz9-JRKl-HaAbDfREbmSQL2cMoQViIlprv06Sc";
+const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+//その他一般
 const scoreList = document.getElementById("scoreList");
 const instrumentList = document.getElementById("instrumentList");
 
@@ -699,6 +705,7 @@ document.querySelectorAll('.close-camera-btn').forEach(btn => {
 //    alert("カメラの起動に失敗しました: " + err.message);
 //  }
 //}
+
 
 
 
